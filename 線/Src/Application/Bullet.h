@@ -11,6 +11,18 @@ public:
 	Bullet();
 	~Bullet();
 
+
+	void Init();
+	void Update();
+	void Draw();
+
 private:
+
+	static const int  bulletNum = 100;
+
+	KdTexture bulletTex;
+	Math::Matrix bulletMat[bulletNum];
+	int bulletFlg[bulletNum];
+
 
 };

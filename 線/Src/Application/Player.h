@@ -17,5 +17,5 @@ private:
 	const float m_moveSpeed = 5.0f;
 
 	KdTexture playerTex;
-	Math::Matrix playermat;
+	Math::Matrix playerMat;
 };
