@@ -22,7 +22,12 @@ private:
 
 	KdTexture bulletTex;
 	Math::Matrix bulletMat[bulletNum];
+	float bulletX[bulletNum];
+	float bulletY[bulletNum];
 	int bulletFlg[bulletNum];
+
+	int  shotWait;//発射待期時間
+
 
 
 };
