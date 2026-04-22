@@ -24,14 +24,5 @@ private:
 	KdTexture playerTex;
 	Math::Matrix playerMat;
 
-	//球
-	static const int  bulletNum = 100;
-
-	KdTexture bulletTex;
-	Math::Matrix bulletMat[bulletNum];
-	float bulletX[bulletNum];
-	float bulletY[bulletNum];
-	int bulletFlg[bulletNum];
-
-	int  shotWait;//発射待期時間
+	
 };
