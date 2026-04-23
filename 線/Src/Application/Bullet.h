@@ -1,10 +1,5 @@
 #pragma once
 
-const int SCREEN_LEFT = -640;
-const int SCREEN_TOP = 360;
-const int SCREEN_RIGHT = 640;
-const int SCREEN_BOTTOM = -360;
-
 class Bullet
 {
 public:
@@ -16,10 +11,14 @@ public:
 	void Update();
 	void Draw();
 
+	void SetPlayerPos(float x, float y);
+
 private:
 
 	static const int  bulletNum = 100;
 
+	int posX;
+	int posY;
 	KdTexture bulletTex;
 	Math::Matrix bulletMat[bulletNum];
 	float bulletX[bulletNum];

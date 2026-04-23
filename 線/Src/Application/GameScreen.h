@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
-#include "Player.h"
+
+class Player;
 
 class GameScreen : public State
 {
@@ -14,5 +15,5 @@ public:
 	void Draw()override;
 private:
 
-	Player player;
+	Player *m_player;
 };
