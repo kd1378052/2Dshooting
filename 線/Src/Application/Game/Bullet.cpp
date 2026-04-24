@@ -47,10 +47,10 @@ void Bullet::Update()
 		//発射後の処理
 		if (bulletFlg[bu] == 1)
 		{
-			bulletY[bu] += 15;
+			bulletX[bu] += 15;
 
 			//弾が画面外に出たら未発射状態に戻す
-			if (bulletY[bu] > 360 + 8)
+			if (bulletX[bu] > 1280 + 8)
 			{
 				bulletFlg[bu] = 0;
 			}

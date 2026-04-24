@@ -1,11 +1,11 @@
 #pragma once
-#include "State.h"
+#include "../State.h"
 
-class ResultScreen : public State
+class RankingScreen : public State
 {
 public:
-	ResultScreen();
-	~ResultScreen();
+	RankingScreen();
+	~RankingScreen();
 
 
 	void Init()override;

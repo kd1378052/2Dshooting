@@ -1,7 +1,8 @@
 #pragma once
-#include "State.h"
+#include "../State.h"
 
 class Player;
+class Enemy;
 
 class GameScreen : public State
 {
@@ -16,4 +17,11 @@ public:
 private:
 
 	Player *m_player;
+	Enemy* m_enemy;
+
+	//背景
+	Math::Matrix backMat1;
+	Math::Matrix backMat2;
+	KdTexture backTex;
+	float backX;
 };
