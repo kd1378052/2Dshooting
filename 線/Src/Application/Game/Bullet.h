@@ -1,5 +1,7 @@
 #pragma once
 
+class Enemy;
+
 class Bullet
 {
 public:
@@ -11,19 +13,23 @@ public:
 	void Update();
 	void Draw();
 
-	void SetPlayerPos(float x, float y);
+	void Flring();
+
+	void SetPlayerPos(Math::Vector2 pos);
+
 
 private:
+	Enemy* m_enemy;
+
 
 	static const int  bulletNum = 100;
 
-	int posX;
-	int posY;
+	Math::Vector2 m_Pos;
+
 	KdTexture bulletTex;
 	Math::Matrix bulletMat[bulletNum];
-	float bulletX[bulletNum];
-	float bulletY[bulletNum];
-	int bulletFlg[bulletNum];
+	Math::Vector2 bulletPos[bulletNum];
+	bool bulletFlg[bulletNum];
 
 	int  shotWait;//発射待期時間
 

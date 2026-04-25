@@ -14,13 +14,12 @@ Enemy::~Enemy()
 void Enemy::Init()
 {
 	srand(time(0));
-
 	//敵の初期化処理
 	for (int e = 0;e < enemyNum;e++)
 	{
-		enemyX[e] = rand() % (1280 + 1 - 64) - (640 - 32);
-		enemyY[e] = rand() % (720 + 1 - 64) - (360 - 32);
-		enemyFlg[e] = 1;
+		enemyPos[e].x = rand() % (1280 + 1 - 64) - (640 - 32);;
+		enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+		m_alive[e] = true;
 	}
 }
 
@@ -28,21 +27,34 @@ void Enemy::Update()
 {
 	for (int e = 0;e < enemyNum;e++)
 	{
-		if (enemyFlg[e] == 1)
+		if (m_alive[e])
 		{
-			enemyX[e] -= 3;
+			enemyPos[e].x -= 3;
 
 			//敵がした端まで到達したら再出現
-			if (enemyX[e] < -640 - 32)
+			if (enemyPos[e].x < -640 - 32)
 			{
-				enemyX[e] = 640 + 32;
+				enemyPos[e].x = 640 + 32;
 			}
 		}
 	}
+	//%2の確率で敵を1体復活させる
+	if ((rand() % 100 - 1) <= 2) {
+		for (int e = 0;e < enemyNum;e++) {
+
+			if (!m_alive[e]) {
+				m_alive[e] = true;
+				enemyPos[e].x = 740 + 32;
+				enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+				break;//1体だけ復活させる
+			}
+		}
+	}
+	
 	//敵
 	for (int e = 0;e < enemyNum;e++)
 	{
-		enemyMat[e] = Math::Matrix::CreateTranslation(enemyX[e], enemyY[e], 0);
+		enemyMat[e] = Math::Matrix::CreateTranslation(enemyPos[e].x, enemyPos[e].y, 0);
 
 	}
 }
@@ -52,10 +64,9 @@ void Enemy::Draw()
 	//敵
 	for (int e = 0;e < enemyNum;e++)
 	{
-		if (enemyFlg[e] == 1)
-		{
-			SHADER.m_spriteShader.SetMatrix(enemyMat[e]);
-			SHADER.m_spriteShader.DrawTex(&enemyTex, Math::Rectangle{ 0,0,64,64 }, 1.0f);
-		}
+		if (!m_alive[e])continue;
+
+		SHADER.m_spriteShader.SetMatrix(enemyMat[e]);
+		SHADER.m_spriteShader.DrawTex(&enemyTex, Math::Rectangle{ 0,0,64,64 }, 1.0f);
 	}
 }

@@ -38,9 +38,42 @@ void GameScreen::Update()
 	{
 		backX = 0;
 	}
+	//ƒvƒŒƒCƒ„[‚Æ’e‚ğÁ‚·ÀŒ±
+	if (GetAsyncKeyState('U') & 0x8000)
+	{
+		m_player->playerFlg = false;
+	}
+	if (GetAsyncKeyState('I') & 0x8000)
+	{
+		m_player->playerFlg = true;
+	}
 
 	m_player->Update();
+
 	m_enemy->Update();
+
+	for (int e = 0;e < m_enemy->enemyNum;e++)
+	{
+		if (m_player->playerFlg)
+		{
+			//©‹@‚Æ‚Ì“–‚½‚è”»’è
+			float a = m_enemy->enemyPos[e].x - m_player->playerPos.x;//’ê•Ó(XÀ•W‚Ì·)
+			float b = m_enemy->enemyPos[e].y - m_player->playerPos.y;//‚‚³(YÀ•W‚Ì·)
+			float c = sqrt(a * a + b * b);//Î•Ói‹——£j
+
+			if (c < 32 + 32)	//“ËŒ‚‚µ‚Ä‚¢‚½‚ç@(‹@@”¼Œa~“G@”¼Œa)
+			{
+				//“G‚ğ“|‚·
+				m_enemy->m_alive[e] = false;
+
+				//‹@‚ğ“|‚·ˆ—
+				m_player->playerFlg = false;
+
+				//”š”­
+				//Explosion(playerX, playerY);
+			}
+		}
+	}
 
 	//”wŒi
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);

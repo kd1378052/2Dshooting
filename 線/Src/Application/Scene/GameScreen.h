@@ -14,6 +14,7 @@ public:
 	void Init()override;
 	void Update()override;
 	void Draw()override;
+
 private:
 
 	Player *m_player;

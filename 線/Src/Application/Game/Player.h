@@ -17,16 +17,18 @@ public:
 	void Update();
 	void Draw();
 
+	bool playerFlg;
+	Math::Vector2 playerPos;
+
+	Bullet* m_bullet;
+
 private:
 
-	float playerX;
-	float playerY;
-	const float m_moveSpeedY = 5.0f;
-	const float m_moveSpeedX = 5.0f;
+
+	const float m_moveSpeed = 5.0f;
 
 	KdTexture playerTex;
 	Math::Matrix playerMat;
 
-	Bullet *m_bullet;
 	
 };
