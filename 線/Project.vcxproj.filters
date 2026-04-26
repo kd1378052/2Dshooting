@@ -165,9 +165,6 @@
     <ClInclude Include="Src\Application\SceneMenager.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Game\Bullet.h">
-      <Filter>Src\Application\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Game\Player.h">
       <Filter>Src\Application\Game</Filter>
     </ClInclude>
@@ -258,9 +255,6 @@
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Game\Player.cpp">
-      <Filter>Src\Application\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Game\Bullet.cpp">
       <Filter>Src\Application\Game</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Game\Enemy.cpp">

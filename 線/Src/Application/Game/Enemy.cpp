@@ -15,10 +15,30 @@ void Enemy::Init()
 {
 	srand(time(0));
 	//敵の初期化処理
+
+
 	for (int e = 0;e < enemyNum;e++)
 	{
-		enemyPos[e].x = rand() % (1280 + 1 - 64) - (640 - 32);;
+		//enemyPos[e].x = rand() % (1280 + 1 - 64) - (640 - 32);
+		enemyPos[e].x = 640 + rand() % 500;
 		enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+			//for (int j = e + 1; j < enemyNum; j++)
+			//{
+			//	if (!m_alive[e] || !m_alive[j]) continue;
+
+			//	
+			//	float dx = enemyPos[e].x - enemyPos[j].x;
+			//	float dy = enemyPos[e].y - enemyPos[j].y;
+			//	
+			//	if (dx * dx + dy * dy < 64 * 64)
+			//	{
+			//		enemyPos[e].x += 64;
+			//		enemyPos[e].y += 64;
+			//		//enemyPos[e].x += rand() % 2 ? 64 : -64;
+			//		//enemyPos[e].y += rand() % 2 ? 64 : -64;
+			//	}
+			//}
+			
 		m_alive[e] = true;
 	}
 }
@@ -35,6 +55,7 @@ void Enemy::Update()
 			if (enemyPos[e].x < -640 - 32)
 			{
 				enemyPos[e].x = 640 + 32;
+				enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
 			}
 		}
 	}
@@ -44,7 +65,7 @@ void Enemy::Update()
 
 			if (!m_alive[e]) {
 				m_alive[e] = true;
-				enemyPos[e].x = 740 + 32;
+				enemyPos[e].x = 640 + 32;
 				enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
 				break;//1体だけ復活させる
 			}

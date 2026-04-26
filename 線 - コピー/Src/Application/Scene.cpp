@@ -1,0 +1,63 @@
+#include "main.h"
+#include "Scene.h"
+#include"SceneMenager.h"
+
+
+void Scene::Draw2D()
+{
+	SCENEMENAGER.Draw();
+}
+
+void Scene::Update()
+{
+	SCENEMENAGER.Update();
+
+	if (GetAsyncKeyState('A') & 0x8000)
+	{
+		SCENEMENAGER.ChangState(new SelectionScreen());
+	}
+	if (GetAsyncKeyState('D') & 0x8000)
+	{
+		SCENEMENAGER.ChangState(new ResultScreen());
+	}
+	
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		SCENEMENAGER.ChangState(new RankingScreen());
+	}
+	if (GetAsyncKeyState('Z') & 0x8000)
+	{
+		SCENEMENAGER.ChangState(new TutorialScreen());
+	}
+	if (GetAsyncKeyState('X') & 0x8000)
+	{
+		SCENEMENAGER.ChangState(new GameScreen());
+	}
+	
+}
+
+void Scene::Init()
+{
+	SCENEMENAGER.ChangState(new GameScreen());
+}
+
+void Scene::Release()
+{
+	// 画像の解放処理
+	charaTex.Release();
+}
+
+void Scene::ImGuiUpdate()
+{
+	return;
+
+	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
+	ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_Once);
+
+	// デバッグウィンドウ
+	if (ImGui::Begin("Debug Window"))
+	{
+		ImGui::Text("FPS : %d", APP.m_fps);
+	}
+	ImGui::End();
+}

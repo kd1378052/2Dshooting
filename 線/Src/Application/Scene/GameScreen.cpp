@@ -5,12 +5,12 @@
 GameScreen::GameScreen()
 {
 	backTex.Load("Texture/back.png");
-
 	m_player = new Player();
-	m_player->Init();
-
 	m_enemy = new Enemy();
+	
+	m_player->Init();
 	m_enemy->Init();
+
 }
 
 GameScreen::~GameScreen()
@@ -23,8 +23,7 @@ GameScreen::~GameScreen()
 
 void GameScreen::Init()
 {
-	m_player = new Player();
-	m_enemy = new Enemy();
+	
 	m_player->Init();
 	m_enemy->Init();
 }
@@ -54,7 +53,7 @@ void GameScreen::Update()
 
 	for (int e = 0;e < m_enemy->enemyNum;e++)
 	{
-		if (m_player->playerFlg)
+		if (m_player->playerFlg && m_enemy->m_alive[e])
 		{
 			//自機との当たり判定
 			float a = m_enemy->enemyPos[e].x - m_player->playerPos.x;//底辺(X座標の差)
@@ -71,6 +70,49 @@ void GameScreen::Update()
 
 				//爆発
 				//Explosion(playerX, playerY);
+			}
+		}
+	}
+
+	for (int bu = 0;bu < m_player->bulletNum;bu++)
+	{
+		//発射後の処理
+		if (m_player->bulletFlg[bu] == true)
+		{
+			m_player->bulletPos[bu].x += 15.0f;
+
+			//弾が画面外に出たら未発射状態に戻す
+			if (m_player->bulletPos[bu].x > 1280 + 8)
+			{
+				m_player->bulletFlg[bu] = false;
+			}
+			//弾と敵の当たり判定
+			for (int e = 0;e < m_enemy->enemyNum;e++) {
+
+
+				if (m_enemy->m_alive[e])//敵が生きているか
+				{
+					float a = m_enemy->enemyPos[e].x - m_player->bulletPos[bu].x;//底辺(X座標の差)
+					float b = m_enemy->enemyPos[e].y - m_player->bulletPos[bu].y;//高さ(Y座標の差)
+					float c = sqrt(a * a + b * b);//斜辺（距離）
+					//float dist2 = a * a + b * b;
+
+					//if (c < 32 + 8)
+					if (c < 25 + 8)//衝突していたら
+					{
+						m_enemy->m_alive[e] = false;
+						m_player->bulletFlg[bu] = false;//弾を未発射にする
+
+						//スコア加算
+						//score += 100;
+
+						//爆発発生！ 追加処理
+						//Explosion(enemyX[e], enemyY[e]);
+
+						break;//弾が未発射になったので敵の繰り返しを抜ける
+
+					}
+				}
 			}
 		}
 	}
