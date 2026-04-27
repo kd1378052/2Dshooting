@@ -19,26 +19,9 @@ void Enemy::Init()
 
 	for (int e = 0;e < enemyNum;e++)
 	{
-		//enemyPos[e].x = rand() % (1280 + 1 - 64) - (640 - 32);
 		enemyPos[e].x = 640 + rand() % 500;
 		enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
-			//for (int j = e + 1; j < enemyNum; j++)
-			//{
-			//	if (!m_alive[e] || !m_alive[j]) continue;
-
-			//	
-			//	float dx = enemyPos[e].x - enemyPos[j].x;
-			//	float dy = enemyPos[e].y - enemyPos[j].y;
-			//	
-			//	if (dx * dx + dy * dy < 64 * 64)
-			//	{
-			//		enemyPos[e].x += 64;
-			//		enemyPos[e].y += 64;
-			//		//enemyPos[e].x += rand() % 2 ? 64 : -64;
-			//		//enemyPos[e].y += rand() % 2 ? 64 : -64;
-			//	}
-			//}
-			
+		AvoidanceEnemy();
 		m_alive[e] = true;
 	}
 }
@@ -89,5 +72,27 @@ void Enemy::Draw()
 
 		SHADER.m_spriteShader.SetMatrix(enemyMat[e]);
 		SHADER.m_spriteShader.DrawTex(&enemyTex, Math::Rectangle{ 0,0,64,64 }, 1.0f);
+	}
+}
+
+//追加処理?
+void Enemy::AvoidanceEnemy()
+{
+	for (int a = 0;a < enemyNum;a++)
+	{
+		for (int b = a + 1; b < enemyNum; b++)
+		{
+			if (!m_alive[a] || !m_alive[b]) continue;
+
+
+			float dx = enemyPos[a].x - enemyPos[b].x;
+			float dy = enemyPos[a].y - enemyPos[b].y;
+
+			if (dx * dx + dy * dy < 64 * 64)
+			{
+				enemyPos[a].x += rand() % 2 ? 64 : -64;
+				enemyPos[a].y += rand() % 2 ? 64 : -64;
+			}
+		}
 	}
 }

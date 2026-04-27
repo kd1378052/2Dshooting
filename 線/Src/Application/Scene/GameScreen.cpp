@@ -1,31 +1,46 @@
 #include "GameScreen.h"
 #include "../Game/Player.h"
 #include "../Game/Enemy.h"
+#include "../Game/Particle.h"
 
 GameScreen::GameScreen()
 {
 	backTex.Load("Texture/back.png");
 	m_player = new Player();
 	m_enemy = new Enemy();
+	for (int i = 0; i < explosionNum; i++)
+	{
+		m_explosion[i] = new Particle();
+	}
 	
 	m_player->Init();
 	m_enemy->Init();
-
+	for (int i = 0; i < explosionNum; i++)
+	{
+		m_explosion[i]->Init();
+	}
 }
 
 GameScreen::~GameScreen()
 {
 	backTex.Release();
 	backX = 0;
-	delete m_player;
+	for (int i = 0; i < explosionNum; i++)
+	{
+		delete m_explosion[i];
+	}
 	delete m_enemy;
+	delete m_player;
 }
 
 void GameScreen::Init()
 {
-	
 	m_player->Init();
 	m_enemy->Init();
+	for (int i = 0; i < explosionNum; i++)
+	{
+		m_explosion[i]->Init();
+	}
 }
 
 void GameScreen::Update()
@@ -36,15 +51,6 @@ void GameScreen::Update()
 	if (backX < -1280)
 	{
 		backX = 0;
-	}
-	//プレイヤーと弾を消す実験
-	if (GetAsyncKeyState('U') & 0x8000)
-	{
-		m_player->playerFlg = false;
-	}
-	if (GetAsyncKeyState('I') & 0x8000)
-	{
-		m_player->playerFlg = true;
 	}
 
 	m_player->Update();
@@ -68,7 +74,7 @@ void GameScreen::Update()
 				//時機を倒す処理
 				m_player->playerFlg = false;
 
-				//爆発
+				//爆発 追加処理　ゲームオーバー
 				//Explosion(playerX, playerY);
 			}
 		}
@@ -98,7 +104,7 @@ void GameScreen::Update()
 					//float dist2 = a * a + b * b;
 
 					//if (c < 32 + 8)
-					if (c < 25 + 8)//衝突していたら
+					if (c < 20 + 8)//衝突していたら
 					{
 						m_enemy->m_alive[e] = false;
 						m_player->bulletFlg[bu] = false;//弾を未発射にする
@@ -106,8 +112,18 @@ void GameScreen::Update()
 						//スコア加算
 						//score += 100;
 
-						//爆発発生！ 追加処理
-						//Explosion(enemyX[e], enemyY[e]);
+						//爆発発生
+						for (int i = 0; i < explosionNum; i++)
+						{
+							m_explosion[i]->Emit(
+								{ m_enemy->enemyPos[e].x,m_enemy->enemyPos[e].y },//座標
+								{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
+								//Rnd() * 10 - 5,//サイズ 3 +2→2~5
+								Rnd() * 5 - 1,//サイズ 3 +2→2~5
+								{ 1,1,1.1 },//色
+								1000,//有効期限
+								false);//繰り返しフラグ
+						}
 
 						break;//弾が未発射になったので敵の繰り返しを抜ける
 
@@ -120,7 +136,16 @@ void GameScreen::Update()
 	//背景
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
 	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
-
+	
+	// パーティクル更新：元コードはプレイヤーの弾数 (bulletNum=100) を使って
+	// m_enemy->enemyPos[bu] を参照していたため、敵配列の範囲 (0..9) を超えるアクセスが発生していました。
+	// ここでは各パーティクルを一度だけ更新するように修正します。
+	for (int i = 0; i < explosionNum; i++)
+	{
+		// Particle::Update は Math::Vector2 を受け取るため安全な値を渡します。
+		// 必要に応じて適切な座標（例: プレイヤー座標や敵座標）に変更してください。
+		m_explosion[i]->Update(Math::Vector2::Zero);
+	}
 }
 
 void GameScreen::Draw()
@@ -135,8 +160,17 @@ void GameScreen::Draw()
 
 	m_player->Draw();
 	m_enemy->Draw();
-
+	//パーティクル
+	for (int i = 0; i < explosionNum; i++)
+	{
+		m_explosion[i]->Draw();
+	}
 	// 文字列表示
 	SHADER.m_spriteShader.DrawString(0, 0, "ゲーム画面", Math::Vector4(1, 1, 1, 1));
 
+}
+
+float GameScreen::Rnd()
+{
+	return rand() / (float)RAND_MAX;
 }

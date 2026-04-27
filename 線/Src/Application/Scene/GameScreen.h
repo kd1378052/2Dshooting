@@ -3,6 +3,7 @@
 
 class Player;
 class Enemy;
+class Particle;
 
 class GameScreen : public State
 {
@@ -15,10 +16,16 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	float Rnd();
+
 private:
 
 	Player *m_player;
 	Enemy* m_enemy;
+
+	//パーティクル
+	static const int explosionNum = 50;
+	Particle* m_explosion[explosionNum];
 
 	//背景
 	Math::Matrix backMat1;

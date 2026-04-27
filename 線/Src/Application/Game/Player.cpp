@@ -39,6 +39,10 @@ void Player::Update()
 		if (GetAsyncKeyState(VK_UP) & 0x8000)playerPos.y += m_moveSpeed;
 		if (GetAsyncKeyState(VK_DOWN) & 0x8000)playerPos.y -= m_moveSpeed;
 
+		//追加処理?
+		//playerPos.Normalize();
+
+
 		//画面外に出ないようにする処理
 		if (playerPos.x > SCREEN_RIGHT - 35)
 		{
