@@ -14,7 +14,7 @@ void Scene::Update()
 
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
-		SCENEMANAGER.ChangState(new SelectionScreen());
+		SCENEMANAGER.ChangState(new GameScene());
 	}
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
@@ -29,16 +29,16 @@ void Scene::Update()
 	{
 		SCENEMANAGER.ChangState(new TutorialScreen());
 	}
-	if (GetAsyncKeyState('X') & 0x8000)
-	{
-		SCENEMANAGER.ChangState(new GameScreen());
-	}
+	//if (GetAsyncKeyState('X') & 0x8000)
+	//{
+	//	SCENEMANAGER.ChangState(new GameScreen());
+	//}
 	
 }
 
 void Scene::Init()
 {
-	SCENEMANAGER.ChangState(new GameScreen());
+	SCENEMANAGER.ChangState(new GameScene());
 }
 
 void Scene::Release()

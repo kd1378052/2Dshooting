@@ -12,8 +12,9 @@ Particle::~Particle()
 
 void Particle::Init()
 {
-	m_size = 0;
-	m_color = 0;
+	m_size = 0.0f;
+	m_color = 0.0f;
+	m_lifespan = 0.0f;
 }
 
 void Particle::Update(Math::Vector2 a_Pos)

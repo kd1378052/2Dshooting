@@ -1,4 +1,6 @@
 #include "ResultScreen.h"
+#include "../SceneManager.h"
+
 
 ResultScreen::ResultScreen()
 {
@@ -14,6 +16,7 @@ void ResultScreen::Init()
 
 void ResultScreen::Update()
 {
+	
 }
 
 void ResultScreen::Draw()
