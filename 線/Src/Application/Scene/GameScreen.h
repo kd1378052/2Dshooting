@@ -19,6 +19,7 @@ public:
 	float Rnd();
 
 private:
+	int hitscore;
 
 	Player *m_player;
 	Enemy* m_enemy;

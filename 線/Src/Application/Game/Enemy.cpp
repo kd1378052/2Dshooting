@@ -20,7 +20,7 @@ void Enemy::Init()
 	for (int e = 0;e < enemyNum;e++)
 	{
 		enemyPos[e].x = 640 + rand() % 500;
-		enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+		enemyPos[e].y = rand() % (700 + 1 - 64) - (360 - 32);
 		AvoidanceEnemy();
 		m_alive[e] = true;
 	}

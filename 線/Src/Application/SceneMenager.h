@@ -42,4 +42,4 @@ private:
 	State* currentState = nullptr;
 };
 
-#define SCENEMENAGER SceneMenager::GetInstance()
+#define SCENEMANAGER SceneMenager::GetInstance()

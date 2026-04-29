@@ -2,7 +2,7 @@
 
 Particle::Particle()
 {
-	particleTex.Load("Texture/en1.png");
+	particleTex.Load("Texture/explosion.png");
 }
 
 Particle::~Particle()

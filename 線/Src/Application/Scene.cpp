@@ -5,40 +5,40 @@
 
 void Scene::Draw2D()
 {
-	SCENEMENAGER.Draw();
+	SCENEMANAGER.Draw();
 }
 
 void Scene::Update()
 {
-	SCENEMENAGER.Update();
+	SCENEMANAGER.Update();
 
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
-		SCENEMENAGER.ChangState(new SelectionScreen());
+		SCENEMANAGER.ChangState(new SelectionScreen());
 	}
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
-		SCENEMENAGER.ChangState(new ResultScreen());
+		SCENEMANAGER.ChangState(new ResultScreen());
 	}
 	
 	if (GetAsyncKeyState('S') & 0x8000)
 	{
-		SCENEMENAGER.ChangState(new RankingScreen());
+		SCENEMANAGER.ChangState(new RankingScreen());
 	}
 	if (GetAsyncKeyState('Z') & 0x8000)
 	{
-		SCENEMENAGER.ChangState(new TutorialScreen());
+		SCENEMANAGER.ChangState(new TutorialScreen());
 	}
 	if (GetAsyncKeyState('X') & 0x8000)
 	{
-		SCENEMENAGER.ChangState(new GameScreen());
+		SCENEMANAGER.ChangState(new GameScreen());
 	}
 	
 }
 
 void Scene::Init()
 {
-	SCENEMENAGER.ChangState(new GameScreen());
+	SCENEMANAGER.ChangState(new GameScreen());
 }
 
 void Scene::Release()

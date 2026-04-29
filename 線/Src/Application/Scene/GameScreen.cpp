@@ -2,6 +2,8 @@
 #include "../Game/Player.h"
 #include "../Game/Enemy.h"
 #include "../Game/Particle.h"
+#include  "../SceneMenager.h"
+
 
 GameScreen::GameScreen()
 {
@@ -12,13 +14,15 @@ GameScreen::GameScreen()
 	{
 		m_explosion[i] = new Particle();
 	}
-	
 	m_player->Init();
 	m_enemy->Init();
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i]->Init();
 	}
+
+	hitscore = 0.0f;
+
 }
 
 GameScreen::~GameScreen()
@@ -35,12 +39,15 @@ GameScreen::~GameScreen()
 
 void GameScreen::Init()
 {
+	hitscore = 0.0f;
+
 	m_player->Init();
 	m_enemy->Init();
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i]->Init();
 	}
+
 }
 
 void GameScreen::Update()
@@ -56,6 +63,12 @@ void GameScreen::Update()
 	m_player->Update();
 
 	m_enemy->Update();
+
+	if (GetAsyncKeyState('O') & 0x8000)
+	{
+		
+	}
+
 
 	for (int e = 0;e < m_enemy->enemyNum;e++)
 	{
@@ -74,8 +87,9 @@ void GameScreen::Update()
 				//時機を倒す処理
 				m_player->playerFlg = false;
 
-				//爆発 追加処理　ゲームオーバー
-				//Explosion(playerX, playerY);
+				//リザルト移動
+
+
 			}
 		}
 	}
@@ -109,8 +123,9 @@ void GameScreen::Update()
 						m_enemy->m_alive[e] = false;
 						m_player->bulletFlg[bu] = false;//弾を未発射にする
 
+
 						//スコア加算
-						//score += 100;
+						hitscore += 50;
 
 						//爆発発生
 						for (int i = 0; i < explosionNum; i++)
@@ -132,6 +147,7 @@ void GameScreen::Update()
 			}
 		}
 	}
+
 
 	//背景
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
@@ -165,9 +181,12 @@ void GameScreen::Draw()
 	{
 		m_explosion[i]->Draw();
 	}
-	// 文字列表示
-	SHADER.m_spriteShader.DrawString(0, 0, "ゲーム画面", Math::Vector4(1, 1, 1, 1));
 
+
+char text[1000];//1文字列格納用sの配列作成
+sprintf_s(text, sizeof(text), "すこあ：%d", hitscore);
+SHADER.m_spriteShader.DrawString(-620, 350, text, Math::Vector4(0, 0, 0, 1));
+	
 }
 
 float GameScreen::Rnd()
