@@ -33,15 +33,21 @@ void Player::Update()
 {
 	if (playerFlg)
 	{
-		//プレイヤー動き
-		if (GetAsyncKeyState(VK_RIGHT) & 0x8000)playerPos.x += m_moveSpeed;
-		if (GetAsyncKeyState(VK_LEFT) & 0x8000)playerPos.x -= m_moveSpeed;
-		if (GetAsyncKeyState(VK_UP) & 0x8000)playerPos.y += m_moveSpeed;
-		if (GetAsyncKeyState(VK_DOWN) & 0x8000)playerPos.y -= m_moveSpeed;
+		Math::Vector2 dir = Math::Vector2::Zero;
 
-		//追加処理?
-		//playerPos.Normalize();
+		// 入力
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || GetAsyncKeyState('D') & 0x8000) dir.x += 1;
+		if (GetAsyncKeyState(VK_LEFT) & 0x8000 || GetAsyncKeyState('A') & 0x8000) dir.x -= 1;
+		if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState('W') & 0x8000) dir.y += 1;
+		if (GetAsyncKeyState(VK_DOWN) & 0x8000 || GetAsyncKeyState('S') & 0x8000) dir.y -= 1;
 
+		// 斜め速度調整
+		if (dir.Length() != 0)
+		{
+			dir.Normalize();
+			playerPos += dir * m_moveSpeed;
+		}
+		
 
 		//画面外に出ないようにする処理
 		if (playerPos.x > SCREEN_RIGHT - 35)

@@ -12,16 +12,16 @@ void Scene::Update()
 {
 	SCENEMANAGER.Update();
 
-	if (GetAsyncKeyState('A') & 0x8000)
+	if (GetAsyncKeyState('V') & 0x8000)
 	{
 		SCENEMANAGER.ChangState(new GameScene());
 	}
-	if (GetAsyncKeyState('D') & 0x8000)
+	if (GetAsyncKeyState('C') & 0x8000)
 	{
 		SCENEMANAGER.ChangState(new ResultScreen());
 	}
 	
-	if (GetAsyncKeyState('S') & 0x8000)
+	if (GetAsyncKeyState('X') & 0x8000)
 	{
 		SCENEMANAGER.ChangState(new RankingScreen());
 	}
@@ -29,10 +29,6 @@ void Scene::Update()
 	{
 		SCENEMANAGER.ChangState(new TutorialScreen());
 	}
-	//if (GetAsyncKeyState('X') & 0x8000)
-	//{
-	//	SCENEMANAGER.ChangState(new GameScreen());
-	//}
 	
 }
 

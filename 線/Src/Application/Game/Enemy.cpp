@@ -13,17 +13,18 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
-	srand(time(0));
-	//敵の初期化処理
-
-
-	for (int e = 0;e < enemyNum;e++)
+	for (int e = 0;e < enemyNum ; e++)
 	{
-		enemyPos[e].x = 640 + rand() % 500;
-		enemyPos[e].y = rand() % (700 + 1 - 64) - (360 - 32);
-		AvoidanceEnemy();
 		m_alive[e] = true;
+
+		enemyPos[e].x = 640 + rand() % 500;
+		enemyPos[e].y = rand() % (690 + 1 - 64) - (360 - 32);
 	}
+	//for (int i = 0; i < enemyNum; i++)
+	//{
+	//	AvoidanceEnemy();
+	//}
+
 }
 
 void Enemy::Update()
@@ -54,7 +55,7 @@ void Enemy::Update()
 			}
 		}
 	}
-	
+
 	//敵
 	for (int e = 0;e < enemyNum;e++)
 	{

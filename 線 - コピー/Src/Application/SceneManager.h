@@ -1,9 +1,9 @@
 #pragma once
 #include "Scene/ResultScreen.h"
-#include "Scene/SelectionScreen.h"
+#include "Scene/GameScene.h"
 #include "Scene/RankingScreen.h"
 #include "Scene/TutorialScreen.h"
-#include "Scene/GameScreen.h"	
+
 class SceneManager
 {
 public:

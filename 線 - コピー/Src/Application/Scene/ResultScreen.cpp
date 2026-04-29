@@ -16,11 +16,7 @@ void ResultScreen::Init()
 
 void ResultScreen::Update()
 {
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
-	{
-		SCENEMANAGER.ChangState(new SelectionScreen());
-
-	}
+	
 }
 
 void ResultScreen::Draw()

@@ -17,9 +17,8 @@ public:
 
 	bool playerFlg;
 
-	//追加処理?
-	//Math::Vector2 playerPos = Math::Vector2::Zero;
 	Math::Vector2 playerPos;
+
 
 	//弾
 	static const int  bulletNum = 100;

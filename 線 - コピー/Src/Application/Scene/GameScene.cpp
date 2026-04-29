@@ -1,22 +1,22 @@
-#include "GameScreen.h"
+#include "GameScene.h"
 #include "../Game/Player.h"
 #include "../Game/Enemy.h"
 #include "../Game/Particle.h"
 #include "../SceneManager.h"
 
 
-
-GameScreen::GameScreen()
+GameScene::GameScene()
 {
 	backTex.Load("Texture/back.png");
 	m_player = new Player();
+	m_player->Init();
 	m_enemy = new Enemy();
+	m_enemy->Init();
+
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i] = new Particle();
 	}
-	m_player->Init();
-	m_enemy->Init();
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i]->Init();
@@ -26,7 +26,7 @@ GameScreen::GameScreen()
 
 }
 
-GameScreen::~GameScreen()
+GameScene::~GameScene()
 {
 	backTex.Release();
 	backX = 0;
@@ -34,13 +34,14 @@ GameScreen::~GameScreen()
 	{
 		delete m_explosion[i];
 	}
-	delete m_enemy;
-	m_enemy = nullptr;
+	
 	delete m_player;
 	m_player = nullptr;
+	delete m_enemy;
+	m_enemy = nullptr;
 }
 
-void GameScreen::Init()
+void GameScene::Init()
 {
 	hitscore = 0.0f;
 
@@ -53,8 +54,14 @@ void GameScreen::Init()
 
 }
 
-void GameScreen::Update()
+void GameScene::Update()
 {
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		//SCENEMANAGER.ChangState(new ResultScreen());
+
+	}
+
 	//背景スクロール
 	backX -= 5;
 
@@ -64,9 +71,7 @@ void GameScreen::Update()
 	}
 
 	m_player->Update();
-
 	m_enemy->Update();
-
 
 	for (int e = 0;e < m_enemy->enemyNum;e++)
 	{
@@ -92,7 +97,7 @@ void GameScreen::Update()
 			}
 		}
 	}
-	
+
 
 	for (int bu = 0;bu < m_player->bulletNum;bu++)
 	{
@@ -115,9 +120,7 @@ void GameScreen::Update()
 					float a = m_enemy->enemyPos[e].x - m_player->bulletPos[bu].x;//底辺(X座標の差)
 					float b = m_enemy->enemyPos[e].y - m_player->bulletPos[bu].y;//高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);//斜辺（距離）
-					//float dist2 = a * a + b * b;
 
-					//if (c < 32 + 8)
 					if (c < 20 + 8)//衝突していたら
 					{
 						m_enemy->m_alive[e] = false;
@@ -148,13 +151,13 @@ void GameScreen::Update()
 		}
 	}
 
-	
 
-	
+
+
 	//背景
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
 	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
-	
+
 	// パーティクル更新：元コードはプレイヤーの弾数 (bulletNum=100) を使って
 	// m_enemy->enemyPos[bu] を参照していたため、敵配列の範囲 (0..9) を超えるアクセスが発生していました。
 	// ここでは各パーティクルを一度だけ更新するように修正します。
@@ -166,7 +169,7 @@ void GameScreen::Update()
 	}
 }
 
-void GameScreen::Draw()
+void GameScene::Draw()
 {
 	//背景 (一枚目)
 	SHADER.m_spriteShader.SetMatrix(backMat1);
@@ -185,13 +188,13 @@ void GameScreen::Draw()
 	}
 
 
-char text[1000];//1文字列格納用sの配列作成
-sprintf_s(text, sizeof(text), "すこあ：%d", hitscore);
-SHADER.m_spriteShader.DrawString(-620, 350, text, Math::Vector4(0, 0, 0, 1));
-	
+	char text[1000];//1文字列格納用sの配列作成
+	sprintf_s(text, sizeof(text), "すこあ：%d", hitscore);
+	SHADER.m_spriteShader.DrawString(-620, 350, text, Math::Vector4(0, 0, 0, 1));
+
 }
 
-float GameScreen::Rnd()
+float GameScene::Rnd()
 {
 	return rand() / (float)RAND_MAX;
 }

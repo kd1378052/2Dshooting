@@ -5,11 +5,11 @@ class Player;
 class Enemy;
 class Particle;
 
-class GameScreen : public State
+class GameScene : public State
 {
 public:
-	GameScreen();
-	~GameScreen();
+	GameScene();
+	~GameScene();
 
 
 	void Init()override;
@@ -21,7 +21,7 @@ public:
 private:
 	int hitscore;
 
-	Player *m_player;
+	Player* m_player;
 	Enemy* m_enemy;
 
 	//パーティクル

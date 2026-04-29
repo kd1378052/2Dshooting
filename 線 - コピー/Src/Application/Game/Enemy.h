@@ -18,6 +18,8 @@ public:
 	Math::Vector2 enemyPos[enemyNum];
 	bool m_alive[enemyNum]; //敵の生存状態を管理
 
+	
+
 private:
 	KdTexture enemyTex;
 	Math::Matrix enemyMat[enemyNum];

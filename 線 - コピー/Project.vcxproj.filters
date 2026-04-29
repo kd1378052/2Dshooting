@@ -153,13 +153,10 @@
     <ClInclude Include="Src\Application\Scene\ResultScreen.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Scene\SelectionScreen.h">
+    <ClInclude Include="Src\Application\Scene\GameScene.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\Scene\TutorialScreen.h">
-      <Filter>Src\Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Scene\GameScreen.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\Game\Player.h">
@@ -248,13 +245,10 @@
     <ClCompile Include="Src\Application\Scene\ResultScreen.cpp">
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Scene\SelectionScreen.cpp">
+    <ClCompile Include="Src\Application\Scene\GameScene.cpp">
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\TutorialScreen.cpp">
-      <Filter>Src\Application\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Scene\GameScreen.cpp">
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\RankingScreen.cpp">
