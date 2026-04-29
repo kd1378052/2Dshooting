@@ -35,6 +35,9 @@ void Enemy::Update()
 		{
 			enemyPos[e].x -= 3;
 
+			enemyPos[e].x += enemyVel[e].x;
+			enemyPos[e].y += enemyVel[e].y;
+
 			//敵がした端まで到達したら再出現
 			if (enemyPos[e].x < -640 - 32)
 			{
@@ -96,4 +99,36 @@ void Enemy::AvoidanceEnemy()
 			}
 		}
 	}
+}
+
+void Enemy::EnemyChange()
+{
+
+	for (int e = 0;e < enemyNum;e++) {
+
+		if (!m_alive[e]) {
+			m_alive[e] = true;
+			enemyPos[e].x = 640 + 32;
+			enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+			
+			enemyVel[e].x = -(rand() % 100) / 50.0f;
+			enemyVel[e].y = (rand() % 200 - 100) / 50.0f;
+
+			break;//1体だけ復活させる
+		}
+		if (enemyPos[e].x < -640 - 32)
+		{
+			enemyPos[e].x = 640 + 32;
+			enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+		}
+		if (enemyPos[e].y < E_SCREEN_BOTTOM - 25)
+		{
+			enemyPos[e].y = E_SCREEN_TOP + 25;
+		}
+		if (enemyPos[e].y > E_SCREEN_TOP + 25)
+		{
+			enemyPos[e].y = E_SCREEN_BOTTOM - 25;
+		}
+	}
+
 }

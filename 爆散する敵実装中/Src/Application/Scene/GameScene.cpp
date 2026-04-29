@@ -87,6 +87,8 @@ void GameScene::Update()
 				//敵を倒す
 				m_enemy->m_alive[e] = false;
 
+
+
 				//時機を倒す処理
 				m_player->playerFlg = false;
 
@@ -124,6 +126,9 @@ void GameScene::Update()
 					if (c < 20 + 8)//衝突していたら
 					{
 						m_enemy->m_alive[e] = false;
+
+						m_enemy->Split(e);
+
 						m_player->bulletFlg[bu] = false;//弾を未発射にする
 
 
@@ -136,7 +141,6 @@ void GameScene::Update()
 							m_explosion[i]->Emit(
 								{ m_enemy->enemyPos[e].x,m_enemy->enemyPos[e].y },//座標
 								{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
-								//Rnd() * 10 - 5,//サイズ 3 +2→2~5
 								Rnd() * 5 - 1,//サイズ 3 +2→2~5
 								{ 1,1,1.1 },//色
 								1000,//有効期限

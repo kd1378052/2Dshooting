@@ -151,7 +151,10 @@ void GameScene::Update()
 		}
 	}
 
-
+	if (hitscore >= 500)
+	{
+		m_enemy->EnemyChange();
+	}
 
 
 	//”wŒi
