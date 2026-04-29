@@ -4,13 +4,13 @@
 #include "Scene/RankingScreen.h"
 #include "Scene/TutorialScreen.h"
 #include "Scene/GameScreen.h"	
-class SceneMenager
+class SceneManager
 {
 public:
 	
-	static SceneMenager& GetInstance()
+	static SceneManager& GetInstance()
 	{
-		static SceneMenager instance;
+		static SceneManager instance;
 		return instance;
 	}
 
@@ -37,9 +37,9 @@ public:
 	
 private:
 
-	SceneMenager(){}
+	SceneManager(){}
 
 	State* currentState = nullptr;
 };
 
-#define SCENEMANAGER SceneMenager::GetInstance()
+#define SCENEMANAGER SceneManager::GetInstance()

@@ -162,9 +162,6 @@
     <ClInclude Include="Src\Application\Scene\GameScreen.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\SceneMenager.h">
-      <Filter>Src\Application</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Game\Player.h">
       <Filter>Src\Application\Game</Filter>
     </ClInclude>
@@ -173,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Src\Application\Game\Particle.h">
       <Filter>Src\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\SceneManager.h">
+      <Filter>Src\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

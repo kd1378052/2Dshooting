@@ -2,7 +2,7 @@
 #include "../Game/Player.h"
 #include "../Game/Enemy.h"
 #include "../Game/Particle.h"
-#include  "../SceneMenager.h"
+#include  "../SceneManager.h"
 
 
 GameScreen::GameScreen()

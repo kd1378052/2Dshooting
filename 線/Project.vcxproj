@@ -164,7 +164,7 @@
     <ClInclude Include="Src\Application\Game\Player.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\main.h" />
-    <ClInclude Include="Src\Application\SceneMenager.h" />
+    <ClInclude Include="Src\Application\SceneManager.h" />
     <ClInclude Include="Src\Application\Scene\GameScreen.h" />
     <ClInclude Include="Src\Application\Scene\RankingScreen.h" />
     <ClInclude Include="Src\Application\Scene\ResultScreen.h" />
