@@ -4,6 +4,7 @@ Player::Player()
 {
 	playerTex.Load("Texture/player.png");
 	bulletTex.Load("Texture/bullet.png");
+	playerFlg = true;
 
 }
 

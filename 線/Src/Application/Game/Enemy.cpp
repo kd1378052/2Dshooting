@@ -13,23 +13,23 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
-	for (int e = 0;e < enemyNum ; e++)
+	for (int e = 0;e < enemyNum ; ++e)
 	{
 		m_alive[e] = true;
 
 		enemyPos[e].x = 640 + rand() % 500;
 		enemyPos[e].y = rand() % (690 + 1 - 64) - (360 - 32);
 	}
-	//for (int i = 0; i < enemyNum; i++)
-	//{
-	//	AvoidanceEnemy();
-	//}
+	for (int i = 0; i < enemyNum; ++i)
+	{
+		AvoidanceEnemy();
+	}
 
 }
 
 void Enemy::Update()
 {
-	for (int e = 0;e < enemyNum;e++)
+	for (int e = 0;e < enemyNum;++e)
 	{
 		if (m_alive[e])
 		{
@@ -48,7 +48,7 @@ void Enemy::Update()
 	}
 	//%2の確率で敵を1体復活させる
 	if ((rand() % 100 - 1) <= 2) {
-		for (int e = 0;e < enemyNum;e++) {
+		for (int e = 0;e < enemyNum;++e) {
 
 			if (!m_alive[e]) {
 				m_alive[e] = true;
@@ -60,7 +60,7 @@ void Enemy::Update()
 	}
 
 	//敵
-	for (int e = 0;e < enemyNum;e++)
+	for (int e = 0;e < enemyNum;++e)
 	{
 		enemyMat[e] = Math::Matrix::CreateTranslation(enemyPos[e].x, enemyPos[e].y, 0);
 
@@ -70,7 +70,7 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	//敵
-	for (int e = 0;e < enemyNum;e++)
+	for (int e = 0;e < enemyNum;++e)
 	{
 		if (!m_alive[e])continue;
 
@@ -82,7 +82,7 @@ void Enemy::Draw()
 //追加処理?
 void Enemy::AvoidanceEnemy()
 {
-	for (int a = 0;a < enemyNum;a++)
+	for (int a = 0;a < enemyNum;++a)
 	{
 		for (int b = a + 1; b < enemyNum; b++)
 		{

@@ -12,7 +12,7 @@ GameScene::GameScene()
 	m_player->Init();
 	m_enemy = new Enemy();
 	m_enemy->Init();
-
+	
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i] = new Particle();
@@ -36,9 +36,7 @@ GameScene::~GameScene()
 	}
 	
 	delete m_player;
-	m_player = nullptr;
 	delete m_enemy;
-	m_enemy = nullptr;
 }
 
 void GameScene::Init()
@@ -56,11 +54,6 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
-	{
-		//SCENEMANAGER.ChangState(new ResultScreen());
-
-	}
 
 	//背景スクロール
 	backX -= 5;
@@ -91,8 +84,10 @@ void GameScene::Update()
 				m_player->playerFlg = false;
 
 				//リザルト移動
-				//SCENEMANAGER.ChangState(new ResultScreen());
-
+				SCENEMANAGER.ChangState(new ResultScreen());
+				
+				return;
+				//関数を抜ける　（これ以降の処理は行わない）
 
 			}
 		}
@@ -144,7 +139,7 @@ void GameScene::Update()
 						}
 
 						break;//弾が未発射になったので敵の繰り返しを抜ける
-
+						//ループを抜ける　そのあとの処理は続く
 					}
 				}
 			}
@@ -161,13 +156,10 @@ void GameScene::Update()
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
 	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
 
-	// パーティクル更新：元コードはプレイヤーの弾数 (bulletNum=100) を使って
-	// m_enemy->enemyPos[bu] を参照していたため、敵配列の範囲 (0..9) を超えるアクセスが発生していました。
-	// ここでは各パーティクルを一度だけ更新するように修正します。
+	
 	for (int i = 0; i < explosionNum; i++)
 	{
-		// Particle::Update は Math::Vector2 を受け取るため安全な値を渡します。
-		// 必要に応じて適切な座標（例: プレイヤー座標や敵座標）に変更してください。
+		
 		m_explosion[i]->Update(Math::Vector2::Zero);
 	}
 }
@@ -190,7 +182,7 @@ void GameScene::Draw()
 		m_explosion[i]->Draw();
 	}
 
-
+	//追加処理
 	char text[1000];//1文字列格納用sの配列作成
 	sprintf_s(text, sizeof(text), "すこあ：%d", hitscore);
 	SHADER.m_spriteShader.DrawString(-620, 350, text, Math::Vector4(0, 0, 0, 1));
