@@ -2,17 +2,20 @@
 #include "../Game/Player.h"
 #include "../Game/Enemy.h"
 #include "../Game/Particle.h"
+#include "../Game/Score.h"
 #include "../SceneManager.h"
 
 
 GameScene::GameScene()
 {
-	backTex.Load("Texture/back.png");
+	backTex.Load("Texture/Game/back.png");
 	m_player = new Player();
 	m_player->Init();
 	m_enemy = new Enemy();
 	m_enemy->Init();
+	m_score = new Score();
 	
+
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i] = new Particle();
@@ -83,6 +86,8 @@ void GameScene::Update()
 				//時機を倒す処理
 				m_player->playerFlg = false;
 
+				m_score->GetScore(hitscore);
+				m_score->Save();
 				//リザルト移動
 				SCENEMANAGER.ChangState(new ResultScreen());
 				
@@ -116,7 +121,8 @@ void GameScene::Update()
 					float b = m_enemy->enemyPos[e].y - m_player->bulletPos[bu].y;//高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);//斜辺（距離）
 
-					if (c < 20 + 8)//衝突していたら
+					//(c < 32 + 10)
+					if (c < 25 + 8)//衝突していたら
 					{
 						m_enemy->m_alive[e] = false;
 						m_player->bulletFlg[bu] = false;//弾を未発射にする
@@ -131,7 +137,6 @@ void GameScene::Update()
 							m_explosion[i]->Emit(
 								{ m_enemy->enemyPos[e].x,m_enemy->enemyPos[e].y },//座標
 								{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
-								//Rnd() * 10 - 5,//サイズ 3 +2→2~5
 								Rnd() * 5 - 1,//サイズ 3 +2→2~5
 								{ 1,1,1.1 },//色
 								1000,//有効期限
@@ -146,11 +151,7 @@ void GameScene::Update()
 		}
 	}
 
-	if (hitscore >= 500)
-	{
-		m_enemy->EnemyChange();
-	}
-
+	
 
 	//背景
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
@@ -159,7 +160,6 @@ void GameScene::Update()
 	
 	for (int i = 0; i < explosionNum; i++)
 	{
-		
 		m_explosion[i]->Update(Math::Vector2::Zero);
 	}
 }

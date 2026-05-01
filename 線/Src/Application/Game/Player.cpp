@@ -2,8 +2,8 @@
 
 Player::Player()
 {
-	playerTex.Load("Texture/player.png");
-	bulletTex.Load("Texture/bullet.png");
+	playerTex.Load("Texture/Game/player.png");
+	bulletTex.Load("Texture/Game/bullet.png");
 	playerFlg = true;
 
 }
@@ -105,11 +105,11 @@ void Player::Draw()
 		SHADER.m_spriteShader.SetMatrix(playerMat);
 		SHADER.m_spriteShader.DrawTex(&playerTex, Math::Rectangle(64, 0, 64, 64), 1.0f);
 	}
-	for (int bu = 0.0f;bu < bulletNum;bu++) {
+	for (int bu = 0;bu < bulletNum;bu++) {
 		if (bulletFlg[bu] == 1)
 		{
 			SHADER.m_spriteShader.SetMatrix(bulletMat[bu]);
-			SHADER.m_spriteShader.DrawTex(&bulletTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+			SHADER.m_spriteShader.DrawTex(&bulletTex, Math::Rectangle{ 0,0,20,20 }, 1.0f);
 		}
 	}
 	

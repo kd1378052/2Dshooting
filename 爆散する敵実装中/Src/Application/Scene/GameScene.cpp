@@ -93,8 +93,8 @@ void GameScene::Update()
 				m_player->playerFlg = false;
 
 				//ƒŠƒUƒ‹ƒgˆÚ“®
-				//SCENEMANAGER.ChangState(new ResultScreen());
-
+				SCENEMANAGER.ChangState(new ResultScreen());
+				return;
 
 			}
 		}

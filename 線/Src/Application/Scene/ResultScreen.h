@@ -1,6 +1,8 @@
 #pragma once
 #include "../State.h"
 
+class Score;
+
 class ResultScreen : public State
 {
 public:
@@ -11,5 +13,9 @@ public:
 	void Init()override;
 	void Update()override;
 	void Draw()override;
+
+private:
+
+	Score* m_score;
 
 };
