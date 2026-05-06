@@ -5,6 +5,9 @@
 
 ResultScreen::ResultScreen()
 {
+	ResultbackTex.Load("Texture/Result/resultback.png");
+
+
 	m_score = new Score();
 
 }
@@ -12,6 +15,8 @@ ResultScreen::ResultScreen()
 ResultScreen::~ResultScreen()
 {
 	delete m_score;
+
+	ResultbackTex.Release();
 }
 
 void ResultScreen::Init()
@@ -21,11 +26,17 @@ void ResultScreen::Init()
 void ResultScreen::Update()
 {
 	m_score->Load();
+
+	ResultbackMat = Math::Matrix::CreateTranslation(0, 0, 0);
+
 }
 
 void ResultScreen::Draw()
 {
 	m_score->Draw();
+
+	SHADER.m_spriteShader.SetMatrix(ResultbackMat);
+	SHADER.m_spriteShader.DrawTex(&ResultbackTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
 
 	char text[1000];
 	sprintf_s(text, sizeof(text), "1ˆÊ %d", m_score->saveScore[0]);
@@ -40,9 +51,5 @@ void ResultScreen::Draw()
 	SHADER.m_spriteShader.DrawString(69, -69, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
 	SHADER.m_spriteShader.DrawString(67, -66, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
 	SHADER.m_spriteShader.DrawString(68, -67, text, Math::Vector4(0.00f, 0.00f, 0.00f, 1));
-	
-
-	// •¶Žš—ñ•\Ž¦
-	SHADER.m_spriteShader.DrawString(0, 200, "ƒŠ‚´‚é‰æ–Ê", Math::Vector4(1, 1, 1, 1));
 	
 }

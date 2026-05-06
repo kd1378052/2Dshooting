@@ -25,6 +25,12 @@ public:
 	// 解放
 	void Release();
 
+	static KdShaderManager& Instance()
+	{
+		static KdShaderManager instance;
+		return instance;
+	}
+
 	//==========================
 	// シェーダ
 	//==========================

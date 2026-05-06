@@ -12,6 +12,7 @@
 GameScene::GameScene()
 {
 	backTex.Load("Texture/Game/back.png");
+	numbersTex.Load("Texture/Game/numbers.png");
 
 	m_player = new Player();
 	m_player->Init();
@@ -38,6 +39,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	numbersTex.Release();
 	backTex.Release();
 
 	backX = 0;
@@ -72,7 +74,6 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
-	
 	//実験
 	if ( GetAsyncKeyState('T') & 0x8000) m_boss->bossHP -= 10;
 	//背景スクロール
@@ -366,7 +367,14 @@ void GameScene::Update()
 	{
 
 	}
+	unsigned long tep = hitscore;
 
+	for (int i = maxDigits - 1; i >= 0; --i)
+	{
+		//下位の桁から抽出し、配列に格納
+		m_digits[i] = tep % 10;
+		tep /= 10;
+	}
 
 	//背景
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
@@ -388,7 +396,25 @@ void GameScene::Draw()
 	//背景（二枚目）
 	SHADER.m_spriteShader.SetMatrix(backMat2);
 	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
+	//スコア表示
+
+	for (int i = 0; i < maxDigits; ++i)
+	{
+		Math::Rectangle rc = { 45 * m_digits[i],0,45,70 };
+
+		float posX = -610;
+		float posY = 310;
+
+		SHADER.m_spriteShader.SetMatrix(numbersMat);
+		SHADER.m_spriteShader.DrawTex(&numbersTex,
+			posX + (i * 70)//ｘ
+			, posY + 0,//ｙ
+			25, //幅
+			55,//高さ
+			&rc);
+	}
 	
+
 	m_player->Draw();
 	m_enemy->Draw();
 	m_Denemy->Draw();
@@ -398,11 +424,6 @@ void GameScene::Draw()
 	{
 		m_explosion[i]->Draw();
 	}
-
-	//追加処理
-	char text[1000];//1文字列格納用sの配列作成
-	sprintf_s(text, sizeof(text), "すこあ：%d", hitscore);
-	SHADER.m_spriteShader.DrawString(-620, 350, text, Math::Vector4(0, 0, 0, 1));
 
 }
 

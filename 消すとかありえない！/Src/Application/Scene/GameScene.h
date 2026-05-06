@@ -43,5 +43,10 @@ private:
 	KdTexture backTex;
 	float backX;
 
+	//スコア数字
+	static const int maxDigits = 5;
+	Math::Matrix numbersMat;
+	KdTexture numbersTex;
+	int m_digits[maxDigits] = {};//{}初期化
 	
 };

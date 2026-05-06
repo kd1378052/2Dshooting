@@ -10,6 +10,8 @@ void Scene::Draw2D()
 
 void Scene::Update()
 {
+	//マウスカーソルを消す
+	//ShowCursor(false);//非表示なる
 	SCENEMANAGER.Update();
 
 	if (GetAsyncKeyState('V') & 0x8000)

@@ -18,4 +18,7 @@ private:
 
 	Score* m_score;
 
+	//背景
+	Math::Matrix ResultbackMat;
+	KdTexture ResultbackTex;
 };
