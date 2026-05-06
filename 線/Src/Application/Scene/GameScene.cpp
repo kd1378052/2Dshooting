@@ -4,6 +4,7 @@
 #include "../Game/Particle.h"
 #include "../Game/Score.h"
 #include"../Game/Boss.h"
+#include"../Game/DivisionEnemy.h"
 #include "../SceneManager.h"
 
 
@@ -15,6 +16,8 @@ GameScene::GameScene()
 	m_player->Init();
 	m_enemy = new Enemy();
 	m_enemy->Init();
+	m_Denemy = new DivisionEnemy();
+	m_Denemy->Init();
 	m_boss = new Boss();
 	m_boss->Init();
 	
@@ -45,7 +48,9 @@ GameScene::~GameScene()
 	delete m_player;
 	delete m_enemy;
 	delete m_boss;
-	delete m_Xenemy;
+	delete m_Denemy;
+
+
 }
 
 void GameScene::Init()
@@ -57,6 +62,7 @@ void GameScene::Init()
 	m_player->Init();
 	m_enemy->Init();
 	m_boss->Init();
+	m_Denemy->Init();
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i]->Init();
@@ -87,12 +93,13 @@ void GameScene::Update()
 
 	m_player->Update();
 	m_enemy->Update();
-	
+	m_Denemy->Update();
 	if (bossscore >=1000)
 	{
 		for (int e = 0;e < m_enemy->enemyNum; ++e)
 		{
 			m_enemy->alive[e] = false;
+			m_Denemy->m_alive[e] = false;
 		}
 		
 		m_boss->effectFlg = true;
@@ -147,6 +154,70 @@ void GameScene::Update()
 
 						break;//弾が未発射になったので敵の繰り返しを抜ける
 						//ループを抜ける　そのあとの処理は続く
+					}
+				}
+			}
+
+			//弾と敵の当たり判定 分裂敵
+			for (int e = 0;e < m_Denemy->enemyNum;e++) {
+
+				if (m_Denemy->m_alive[e])//敵が生きているか
+				{
+					float a = m_Denemy->enemyPos[e].x - m_player->bulletPos[bu].x;//底辺(X座標の差)
+					float b = m_Denemy->enemyPos[e].y - m_player->bulletPos[bu].y;//高さ(Y座標の差)
+					float c = sqrt(a * a + b * b);//斜辺（距離）
+
+					if (m_Denemy->enemySize[e] == ENEMY_LARGE)
+					{
+						if (c < 32 + 8)//衝突していたら 敵と弾の半径
+						{
+							//m_enemy->m_alive[e] = false;
+							m_Denemy->Split(e);
+
+							m_player->bulletFlg[bu] = false;//弾を未発射にする
+							//スコア加算
+							hitscore += 40;
+
+							//爆発発生
+							for (int i = 0; i < explosionNum; i++)
+							{
+								m_explosion[i]->Emit(
+									{ m_Denemy->enemyPos[e].x,m_Denemy->enemyPos[e].y },//座標
+									{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
+									Rnd() * 5 - 1,//サイズ 3 +2→2~5
+									{ 1,1,1.1 },//色
+									1000,//有効期限
+									false);//繰り返しフラグ
+							}
+							break;//弾が未発射になったので敵の繰り返しを抜ける
+						}
+					}
+					if (m_Denemy->enemySize[e] == ENEMY_SMALL)
+					{
+						if (c < 14 + 8)//衝突していたら
+						{
+							m_Denemy->m_alive[e] = false;
+
+							m_player->bulletFlg[bu] = false;//弾を未発射にする
+
+
+							//スコア加算
+							hitscore += 60;
+
+							//爆発発生
+							for (int i = 0; i < explosionNum; i++)
+							{
+								m_explosion[i]->Emit(
+									{ m_Denemy->enemyPos[e].x,m_Denemy->enemyPos[e].y },//座標
+									{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
+									Rnd() * 5 - 1,//サイズ 3 +2→2~5
+									{ 1,1,1.1 },//色
+									1000,//有効期限
+									false);//繰り返しフラグ
+							}
+							break;//弾が未発射になったので敵の繰り返しを抜ける
+							//ループを抜ける　そのあとの処理は続く
+						}
 					}
 				}
 			}
@@ -240,6 +311,33 @@ void GameScene::Update()
 			}
 		}
 	}
+	//自機と分裂敵の当たり判定
+	for (int e = 0;e < m_Denemy->enemyNum;e++)
+	{
+		if (m_player->playerFlg && m_Denemy->m_alive[e])
+		{
+			//自機との当たり判定
+			float a = m_Denemy->enemyPos[e].x - m_player->playerPos.x;//底辺(X座標の差)
+			float b = m_Denemy->enemyPos[e].y - m_player->playerPos.y;//高さ(Y座標の差)
+			float c = sqrt(a * a + b * b);//斜辺（距離）
+
+			if (c < 32 + 32)	//突撃していたら　(時機　半径×敵　半径)
+			{
+				//敵を倒す
+				m_Denemy->m_alive[e] = false;
+
+
+				//時機を倒す処理
+				m_player->playerFlg = false;
+
+				//リザルト移動
+				SCENEMANAGER.ChangState(new ResultScreen());
+				return;
+
+			}
+		}
+	}
+
 	//ボスと時機の当たり判定
 	if (m_player->playerFlg && m_boss->bossFlg)
 	{
@@ -297,6 +395,7 @@ void GameScene::Draw()
 
 	m_player->Draw();
 	m_enemy->Draw();
+	m_Denemy->Draw();
 	m_boss->Draw();
 	//パーティクル
 	for (int i = 0; i < explosionNum; i++)

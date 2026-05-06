@@ -1,19 +1,19 @@
-#include "Enemy.h"
+#include "DivisionEnemy.h"
 
-Enemy::Enemy()
+DivisionEnemy::DivisionEnemy()
 {
 	srand(time(0));
-	enemyTex.Load("Texture/enemy1.png");
+	enemyTex.Load("Texture/Game/enemy1.png");
 }
 
-Enemy::~Enemy()
+DivisionEnemy::~DivisionEnemy()
 {
 	enemyTex.Release();
 }
 
-void Enemy::Init()
+void DivisionEnemy::Init()
 {
-	for (int e = 0;e < enemyNum ; e++)
+	for (int e = 0;e < enemyNum; e++)
 	{
 		m_alive[e] = true;
 
@@ -21,15 +21,14 @@ void Enemy::Init()
 
 		enemyPos[e].x = 640 + rand() % 500;
 		enemyPos[e].y = rand() % (690 + 1 - 64) - (360 - 32);
-		
 		enemyVel[e].x = -(rand() % 100) / 50.0f;
 		enemyVel[e].y = (rand() % 200 - 100) / 50.0f;
 	}
-	
+
 
 }
 
-void Enemy::Update()
+void DivisionEnemy::Update()
 {
 	for (int e = 0;e < enemyNum;e++)
 	{
@@ -41,19 +40,20 @@ void Enemy::Update()
 			enemyPos[e].y += enemyVel[e].y;
 
 			//敵がした端まで到達したら再出現
-			if (enemyPos[e].x < E_SCREEN_LEFT - 32)
+			if (enemyPos[e].x < E_SCREENLEFT - 32)
 			{
-				enemyPos[e].x = E_SCREEN_RIGHT + 32;
-				enemyPos[e].y = E_SCREEN_TOP + 32;
+				enemyPos[e].x = E_SCREENRIGHT + 32;
+				enemyPos[e].y = E_SCREENTOP + 32;
 			}
-			if (enemyPos[e].y < E_SCREEN_BOTTOM - 32)
+			if (enemyPos[e].y < E_SCREENBOTTOM - 32)
 			{
-				enemyPos[e].y = E_SCREEN_TOP + 32;
+				enemyPos[e].y = E_SCREENTOP + 32;
 			}
-			if (enemyPos[e].y > E_SCREEN_TOP + 32)
+			if (enemyPos[e].y > E_SCREENTOP + 32)
 			{
-				enemyPos[e].y = E_SCREEN_BOTTOM - 32;
+				enemyPos[e].y = E_SCREENBOTTOM - 32;
 			}
+
 		}
 	}
 	//%2の確率で敵を1体復活させる
@@ -76,11 +76,11 @@ void Enemy::Update()
 		Math::Matrix transMat, scaleMat;
 		if (enemySize[e] == ENEMY_LARGE)
 		{
-			scaleMat = Math::Matrix::CreateScale(1.2f,1.2f, 0);
+			scaleMat = Math::Matrix::CreateScale(1.2f, 1.2f, 1.0f);
 		}
-		if(enemySize[e] == ENEMY_SMALL)
+		if (enemySize[e] == ENEMY_SMALL)
 		{
-			scaleMat = Math::Matrix::CreateScale(0.9f, 0.9f, 0);
+			scaleMat = Math::Matrix::CreateScale(0.9f, 0.9f, 1.0f);
 		}
 		transMat = Math::Matrix::CreateTranslation(enemyPos[e].x, enemyPos[e].y, 0);
 		//合成 ・・・　かく　かい　い
@@ -89,27 +89,20 @@ void Enemy::Update()
 	}
 }
 
-void Enemy::Draw()
+void DivisionEnemy::Draw()
 {
-
 	//敵
 	for (int e = 0;e < enemyNum;e++)
 	{
 		if (!m_alive[e])continue;
 
 		SHADER.m_spriteShader.SetMatrix(enemyMat[e]);
-
-		
-		//SHADER.m_spriteShader.DrawTex(&enemyTex,
-		//	Math::Rectangle{ 0,0,64,64 },
-		//	scale);
-
 		SHADER.m_spriteShader.DrawTex(&enemyTex, Math::Rectangle{ 0,0,64,64 }, 1.0f);
 
 	}
 }
 
-void Enemy::Split(int index)
+void DivisionEnemy::Split(int index)
 {
 	//小さい処理は爆散しない
 	if (enemySize[index] == ENEMY_SMALL)
@@ -132,13 +125,10 @@ void Enemy::Split(int index)
 		m_alive[i] = true;
 		enemySize[i] = ENEMY_SMALL;
 
-		//enemyPos[i] = enemyPos[index];
-		//↑追加処理　こいつを消すとバグランなったなぜ？
-
 		enemyVel[i].x = -(rand() % 100) / 50.0f;
 		enemyVel[i].y = (rand() % 200 - 100) / 50.0f;
 
-		// ばらける方向
+		// ばらける方向　左右上下にずらす
 		enemyPos[i].x += (count == 0 ? -20 : 20);
 		enemyPos[i].y += (count == 0 ? -20 : 20);
 
@@ -148,4 +138,3 @@ void Enemy::Split(int index)
 		if (count >= 2) break;
 	}
 }
-

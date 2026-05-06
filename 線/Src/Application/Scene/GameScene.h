@@ -5,8 +5,8 @@ class Player;
 class Enemy;
 class Particle;
 class Score;
+class DivisionEnemy;
 class Boss;
-class ExplosionEnemy;
 
 
 class GameScene : public State
@@ -30,7 +30,7 @@ private:
 	Enemy* m_enemy;
 	Score* m_score;
 	Boss* m_boss;
-	ExplosionEnemy* m_Xenemy;
+	DivisionEnemy* m_Denemy;
 
 	//パーティクル
 	static const int explosionNum = 50;

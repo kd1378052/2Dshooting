@@ -72,20 +72,6 @@ void Boss::Update()
 			effectFlg = false;
 		}
 		
-		////端まで到達したら再出現
-		//if (bossPos.x < screenLeft -100)
-		//{
-		//	bossPos.x = screenRight +100;
-		//}
-
-		//if (bossPos[e].y < B_SCREEN_BOTTOM - 25)
-		//{
-		//	bossPos[e].y = B_SCREEN_TOP + 25;
-		//}
-		//if (bossPos[e].y > B_SCREEN_TOP + 25)
-		//{
-		//	bossPos[e].y = B_SCREEN_BOTTOM - 25;
-		//}
 	}
 
 	bossMat = Math::Matrix::CreateTranslation(bossPos.x, bossPos.y, 0);
