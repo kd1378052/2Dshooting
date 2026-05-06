@@ -4,7 +4,7 @@ Boss::Boss()
 {
 	bossTex.Load("Texture/Game/boss.png");
 	effectTex.Load("Texture/Game/Effect/effect.png");
-	m_alpha = 1;
+	m_alpha = 1.0f;
 	m_alphaAdd = -0.01f;
 }
 
@@ -27,7 +27,7 @@ void Boss::Init()
 	bossHP = 100.0f;
 	bossAppearance = 0.0f;
 	m_alphaAdd = -0.01f;
-	m_alpha = 1;
+	m_alpha = 1.0f;
 
 }
 
@@ -50,7 +50,6 @@ void Boss::Update()
 		m_alpha = 1.0f;
 		m_alphaAdd *= -1;
 	}
-
 
 	if (bossAppearance > 120)
 	{

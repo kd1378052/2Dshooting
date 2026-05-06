@@ -40,14 +40,7 @@ void ResultScreen::Draw()
 	SHADER.m_spriteShader.DrawString(69, -69, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
 	SHADER.m_spriteShader.DrawString(67, -66, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
 	SHADER.m_spriteShader.DrawString(68, -67, text, Math::Vector4(0.00f, 0.00f, 0.00f, 1));
-	sprintf_s(text, sizeof(text), "4ˆÊ %d", m_score->saveScore[3]);
-	SHADER.m_spriteShader.DrawString(-247, -148, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
-	SHADER.m_spriteShader.DrawString(-244, -146, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
-	SHADER.m_spriteShader.DrawString(-245, -147, text, Math::Vector4(0.00f, 0.00f, 0.00f, 1));
-	sprintf_s(text, sizeof(text), "5ˆÊ %d", m_score->saveScore[4]);
-	SHADER.m_spriteShader.DrawString(161, -158, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
-	SHADER.m_spriteShader.DrawString(159, -156, text, Math::Vector4(1.00f, 1.00f, 1.00f, 1));
-	SHADER.m_spriteShader.DrawString(160, -157, text, Math::Vector4(0.00f, 0.00f, 0.00f, 1));
+	
 
 	// •¶Žš—ñ•\Ž¦
 	SHADER.m_spriteShader.DrawString(0, 200, "ƒŠ‚´‚é‰æ–Ê", Math::Vector4(1, 1, 1, 1));

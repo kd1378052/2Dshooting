@@ -88,7 +88,7 @@ void GameScene::Update()
 	m_player->Update();
 	m_enemy->Update();
 	
-	if (bossscore >=100)
+	if (bossscore >=1000)
 	{
 		for (int e = 0;e < m_enemy->enemyNum; ++e)
 		{
@@ -195,7 +195,6 @@ void GameScene::Update()
 					//ƒXƒRƒA‰ÁŽZ
 					hitscore += 1000;
 					bossscore = 0.0f;
-					m_boss->bossAppearance = 0;
 
 					break;
 				}
@@ -205,7 +204,7 @@ void GameScene::Update()
 	}
 	if (bossscore == 0.0f)
 	{
-		m_boss->bossHP = 100;
+		m_boss->Init();
 	}
 
 	
