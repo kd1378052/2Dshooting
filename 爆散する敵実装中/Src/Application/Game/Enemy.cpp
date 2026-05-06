@@ -13,25 +13,19 @@ Enemy::~Enemy()
 
 void Enemy::Init()
 {
-	srand(time(0));
-	
-
 	for (int e = 0;e < enemyNum ; e++)
 	{
 		m_alive[e] = true;
-
-		
 
 		enemySize[e] = ENEMY_LARGE;
 
 		enemyPos[e].x = 640 + rand() % 500;
 		enemyPos[e].y = rand() % (690 + 1 - 64) - (360 - 32);
+		
+		enemyVel[e].x = -(rand() % 100) / 50.0f;
+		enemyVel[e].y = (rand() % 200 - 100) / 50.0f;
 	}
-	//追加処理
-	//for (int i = 0; i < enemyNum; i++)
-	//{
-	//	AvoidanceEnemy();
-	//}
+	
 
 }
 
@@ -50,7 +44,15 @@ void Enemy::Update()
 			if (enemyPos[e].x < E_SCREEN_LEFT - 32)
 			{
 				enemyPos[e].x = E_SCREEN_RIGHT + 32;
-				enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
+				enemyPos[e].y = E_SCREEN_TOP + 32;
+			}
+			if (enemyPos[e].y < E_SCREEN_BOTTOM - 32)
+			{
+				enemyPos[e].y = E_SCREEN_TOP + 32;
+			}
+			if (enemyPos[e].y > E_SCREEN_TOP + 32)
+			{
+				enemyPos[e].y = E_SCREEN_BOTTOM - 32;
 			}
 		}
 	}
@@ -60,6 +62,7 @@ void Enemy::Update()
 
 			if (!m_alive[e]) {
 				m_alive[e] = true;
+				enemySize[e] = ENEMY_LARGE;
 				enemyPos[e].x = 640 + 32;
 				enemyPos[e].y = rand() % (720 + 1 - 64) - (360 - 32);
 				break;//1体だけ復活させる
@@ -70,7 +73,6 @@ void Enemy::Update()
 	//敵
 	for (int e = 0;e < enemyNum;e++)
 	{
-
 		Math::Matrix transMat, scaleMat;
 		if (enemySize[e] == ENEMY_LARGE)
 		{
@@ -78,10 +80,9 @@ void Enemy::Update()
 		}
 		if(enemySize[e] == ENEMY_SMALL)
 		{
-			scaleMat = Math::Matrix::CreateScale(1.0f, 1.0f, 0);
+			scaleMat = Math::Matrix::CreateScale(0.9f, 0.9f, 0);
 		}
 		transMat = Math::Matrix::CreateTranslation(enemyPos[e].x, enemyPos[e].y, 0);
-
 		//合成 ・・・　かく　かい　い
 		// 拡大　回転　移動
 		enemyMat[e] = scaleMat * transMat;
@@ -96,11 +97,6 @@ void Enemy::Draw()
 	{
 		if (!m_alive[e])continue;
 
-		//float scale = 1.0f;
-
-		//if (enemySize[e] == ENEMY_LARGE) scale = 1.0f;
-		//else scale = 1.0f;
-
 		SHADER.m_spriteShader.SetMatrix(enemyMat[e]);
 
 		
@@ -112,33 +108,12 @@ void Enemy::Draw()
 	}
 }
 
-//追加処理?
-void Enemy::AvoidanceEnemy()
-{
-	for (int a = 0;a < enemyNum;a++)
-	{
-		for (int b = a + 1; b < enemyNum; b++)
-		{
-			if (!m_alive[a] || !m_alive[b]) continue;
-
-
-			float dx = enemyPos[a].x - enemyPos[b].x;
-			float dy = enemyPos[a].y - enemyPos[b].y;
-
-			if (dx * dx + dy * dy < 64 * 64)
-			{
-				enemyPos[a].x += rand() % 2 ? 64 : -64;
-				enemyPos[a].y += rand() % 2 ? 64 : -64;
-			}
-		}
-	}
-}
-
 void Enemy::Split(int index)
 {
+	//小さい処理は爆散しない
 	if (enemySize[index] == ENEMY_SMALL)
 	{
-		m_alive[index] = false;
+		m_alive[index] = false;//小さいと消す
 		return;
 	}
 
@@ -165,24 +140,10 @@ void Enemy::Split(int index)
 		enemyPos[i].x += (count == 0 ? -20 : 20);
 		enemyPos[i].y += (count == 0 ? -20 : 20);
 
-		if (enemyPos[i].x < E_SCREEN_LEFT - 32)
-		{
-			enemyPos[i].x = E_SCREEN_RIGHT + 32;
-			enemyPos[i].y = rand() % (720 + 1 - 64) - (360 - 32);
-		}
-		if(enemyPos[i].y < E_SCREEN_BOTTOM - 32)
-		{
-			enemyPos[i].y = E_SCREEN_TOP + 32;
-		}
-		if(enemyPos[i].y > E_SCREEN_TOP + 32)
-		{
-			enemyPos[i].y = E_SCREEN_BOTTOM - 32;
-		}
-
-
 		count++;
 
 		//ここで数を数えている
 		if (count >= 2) break;
 	}
 }
+

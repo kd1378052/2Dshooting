@@ -162,9 +162,6 @@
     <ClInclude Include="Src\Application\Game\Player.h">
       <Filter>Src\Application\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Game\Enemy.h">
-      <Filter>Src\Application\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Game\Particle.h">
       <Filter>Src\Application\Game</Filter>
     </ClInclude>
@@ -172,6 +169,15 @@
       <Filter>Src\Application</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\Game\Score.h">
+      <Filter>Src\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\Boss.h">
+      <Filter>Src\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\Enemy.h">
+      <Filter>Src\Application\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Game\ExplosionEnemy.h">
       <Filter>Src\Application\Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -257,13 +263,19 @@
     <ClCompile Include="Src\Application\Game\Player.cpp">
       <Filter>Src\Application\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Game\Enemy.cpp">
-      <Filter>Src\Application\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\Game\Particle.cpp">
       <Filter>Src\Application\Game</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Game\Score.cpp">
+      <Filter>Src\Application\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\Boss.cpp">
+      <Filter>Src\Application\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\Enemy.cpp">
+      <Filter>Src\Application\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Game\ExplosionEnemy.cpp">
       <Filter>Src\Application\Game</Filter>
     </ClCompile>
   </ItemGroup>

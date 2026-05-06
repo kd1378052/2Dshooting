@@ -76,8 +76,8 @@ void Player::Update()
 					bulletPos[bu].y = playerPos.y;
 					bulletPos[bu].x = playerPos.x;
 
-					//待機時間10フレーム
-					shotWait = 10;
+					//待機時間7フレーム
+					shotWait = 7;
 					break;//1発「発射状態」にしたので弾の繰り返しを抜ける
 				}
 			}

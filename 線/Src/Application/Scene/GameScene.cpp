@@ -3,7 +3,9 @@
 #include "../Game/Enemy.h"
 #include "../Game/Particle.h"
 #include "../Game/Score.h"
+#include"../Game/Boss.h"
 #include "../SceneManager.h"
+
 
 
 GameScene::GameScene()
@@ -13,7 +15,10 @@ GameScene::GameScene()
 	m_player->Init();
 	m_enemy = new Enemy();
 	m_enemy->Init();
+	m_boss = new Boss();
+	m_boss->Init();
 	m_score = new Score();
+	
 	
 
 	for (int i = 0; i < explosionNum; i++)
@@ -40,6 +45,7 @@ GameScene::~GameScene()
 	
 	delete m_player;
 	delete m_enemy;
+	delete m_boss;
 }
 
 void GameScene::Init()
@@ -48,6 +54,7 @@ void GameScene::Init()
 
 	m_player->Init();
 	m_enemy->Init();
+	m_boss->Init();
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i]->Init();
@@ -57,6 +64,15 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
+	//実験
+	//if ( GetAsyncKeyState('G') & 0x8000) m_boss->bossFlg = false;
+	//if (GetAsyncKeyState('E') & 0x8000)
+	//{
+	//	for (int e = 0;e < m_enemy->enemyNum; ++e)
+	//	{
+	//		m_enemy->alive[e] = false;
+	//	}
+	//}
 
 	//背景スクロール
 	backX -= 5;
@@ -68,37 +84,9 @@ void GameScene::Update()
 
 	m_player->Update();
 	m_enemy->Update();
+	m_boss->Update();
 
-	for (int e = 0;e < m_enemy->enemyNum;e++)
-	{
-		if (m_player->playerFlg && m_enemy->m_alive[e])
-		{
-			//自機との当たり判定
-			float a = m_enemy->enemyPos[e].x - m_player->playerPos.x;//底辺(X座標の差)
-			float b = m_enemy->enemyPos[e].y - m_player->playerPos.y;//高さ(Y座標の差)
-			float c = sqrt(a * a + b * b);//斜辺（距離）
-
-			if (c < 32 + 32)	//突撃していたら　(時機　半径×敵　半径)
-			{
-				//敵を倒す
-				m_enemy->m_alive[e] = false;
-
-				//時機を倒す処理
-				m_player->playerFlg = false;
-
-				m_score->GetScore(hitscore);
-				m_score->Save();
-				//リザルト移動
-				SCENEMANAGER.ChangState(new ResultScreen());
-				
-				return;
-				//関数を抜ける　（これ以降の処理は行わない）
-
-			}
-		}
-	}
-
-
+	//当たり判定　ノーマル敵
 	for (int bu = 0;bu < m_player->bulletNum;bu++)
 	{
 		//発射後の処理
@@ -112,10 +100,9 @@ void GameScene::Update()
 				m_player->bulletFlg[bu] = false;
 			}
 			//弾と敵の当たり判定
-			for (int e = 0;e < m_enemy->enemyNum;e++) {
-
-
-				if (m_enemy->m_alive[e])//敵が生きているか
+			for (int e = 0;e < m_enemy->enemyNum;e++)
+			{
+				if (m_enemy->alive[e])//敵が生きているか
 				{
 					float a = m_enemy->enemyPos[e].x - m_player->bulletPos[bu].x;//底辺(X座標の差)
 					float b = m_enemy->enemyPos[e].y - m_player->bulletPos[bu].y;//高さ(Y座標の差)
@@ -124,9 +111,8 @@ void GameScene::Update()
 					//(c < 32 + 10)
 					if (c < 25 + 8)//衝突していたら
 					{
-						m_enemy->m_alive[e] = false;
+						m_enemy->alive[e] = false;
 						m_player->bulletFlg[bu] = false;//弾を未発射にする
-
 
 						//スコア加算
 						hitscore += 50;
@@ -147,6 +133,39 @@ void GameScene::Update()
 						//ループを抜ける　そのあとの処理は続く
 					}
 				}
+			}
+		}
+	}
+
+	//自機と敵の当たり判定
+	for (int e = 0;e < m_enemy->enemyNum;e++)
+	{
+		if (m_player->playerFlg && m_enemy->alive[e])
+		{
+			//自機との当たり判定
+			float a = m_enemy->enemyPos[e].x - m_player->playerPos.x;//底辺(X座標の差)
+			float b = m_enemy->enemyPos[e].y - m_player->playerPos.y;//高さ(Y座標の差)
+			float c = sqrt(a * a + b * b);//斜辺（距離）
+
+			if (c < 32 + 32)	//突撃していたら　(自機　半径 35 ×敵　半径)
+			{
+				//敵を倒す
+				m_enemy->alive[e] = false;
+
+				//自機を倒す処理
+				m_player->playerFlg = false;
+				for (int be = 0;be < m_player->bulletNum;be++) {
+					
+					m_player->bulletFlg[be] = false;
+				}
+
+				m_score->SetScore(hitscore);
+				m_score->Save();
+				//リザルト移動
+				SCENEMANAGER.ChangState(new ResultScreen());
+				
+				return;
+				//関数を抜ける　（これ以降の処理は行わない）
 			}
 		}
 	}
@@ -176,6 +195,7 @@ void GameScene::Draw()
 
 	m_player->Draw();
 	m_enemy->Draw();
+	m_boss->Draw();
 	//パーティクル
 	for (int i = 0; i < explosionNum; i++)
 	{

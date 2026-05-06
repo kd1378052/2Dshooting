@@ -11,7 +11,7 @@ public:
 	void Save();
 	void Load();
 
-	void GetScore(int& hitscore) { score = hitscore; }
+	void SetScore(int& hitscore) { score = hitscore; }
 
 	static const int saveNum = 50;//セーブ数
 	int saveScore[saveNum];

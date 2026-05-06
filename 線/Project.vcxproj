@@ -159,7 +159,9 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\Game\Boss.h" />
     <ClInclude Include="Src\Application\Game\Enemy.h" />
+    <ClInclude Include="Src\Application\Game\ExplosionEnemy.h" />
     <ClInclude Include="Src\Application\Game\Particle.h" />
     <ClInclude Include="Src\Application\Game\Player.h" />
     <ClInclude Include="Src\Application\Game\Score.h" />
@@ -194,7 +196,9 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\Game\Boss.cpp" />
     <ClCompile Include="Src\Application\Game\Enemy.cpp" />
+    <ClCompile Include="Src\Application\Game\ExplosionEnemy.cpp" />
     <ClCompile Include="Src\Application\Game\Particle.cpp" />
     <ClCompile Include="Src\Application\Game\Player.cpp" />
     <ClCompile Include="Src\Application\Game\Score.cpp" />

@@ -32,6 +32,8 @@ private:
 	KdTexture playerTex;
 	Math::Matrix playerMat;
 
+	float animecount;
+
 	//弾
 
 	KdTexture bulletTex;

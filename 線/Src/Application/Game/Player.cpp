@@ -20,6 +20,7 @@ void Player::Init()
 	playerPos.x = -500;
 	playerPos.y = 0;
 	playerFlg = true;
+	animecount = 0.0;
 
 	shotWait = 0.0f;
 	//球の初期化
@@ -67,6 +68,12 @@ void Player::Update()
 		{
 			playerPos.y = SCREEN_TOP - 35;
 		}
+		//アニメーションの繰り返し
+		animecount += 0.1f;
+		if (animecount >= 3)
+		{
+			animecount = 0;
+		}
 
 		if (shotWait == 0.0f)
 		{
@@ -103,7 +110,7 @@ void Player::Draw()
 	if(playerFlg)
 	{
 		SHADER.m_spriteShader.SetMatrix(playerMat);
-		SHADER.m_spriteShader.DrawTex(&playerTex, Math::Rectangle(64, 0, 64, 64), 1.0f);
+		SHADER.m_spriteShader.DrawTex(&playerTex, Math::Rectangle((int)animecount * 70, 0, 70, 70), 1.0f);
 	}
 	for (int bu = 0;bu < bulletNum;bu++) {
 		if (bulletFlg[bu] == 1)
