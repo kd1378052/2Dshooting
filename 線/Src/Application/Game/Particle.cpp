@@ -41,6 +41,8 @@ void Particle::Update(Math::Vector2 a_Pos)
 	m_size *= 0.95f;//徐々に小さく
 	//m_size *= 1.2f;//徐々に大きく
 
+	
+
 	//行列作成
 	Math::Matrix transMat, scaleMat;
 	scaleMat = Math::Matrix::CreateScale(m_size, m_size, 0);
@@ -49,6 +51,7 @@ void Particle::Update(Math::Vector2 a_Pos)
 	//合成 ・・・　かく　かい　い
 	// 拡大　回転　移動
 	m_matrix = scaleMat * transMat;
+
 }
 
 void Particle::Draw()
@@ -57,6 +60,8 @@ void Particle::Draw()
 
 	Math::Rectangle srcRect = { 0,0,4,4 };
 	SHADER.m_spriteShader.DrawTex(&particleTex, 0, 0, &srcRect, &m_color);
+
+	
 }
 
 float Particle::Rnd()

@@ -2,7 +2,7 @@
 #include "Scene/ResultScreen.h"
 #include "Scene/GameScene.h"
 #include "Scene/RankingScreen.h"
-#include "Scene/TutorialScreen.h"
+#include "Scene/Title.h"
 
 class SceneManager
 {

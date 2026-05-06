@@ -27,14 +27,14 @@ void Scene::Update()
 	}
 	if (GetAsyncKeyState('Z') & 0x8000)
 	{
-		SCENEMANAGER.ChangState(new TutorialScreen());
+		SCENEMANAGER.ChangState(new Title());
 	}
 	
 }
 
 void Scene::Init()
 {
-	SCENEMANAGER.ChangState(new GameScene());
+	SCENEMANAGER.ChangState(new Title());
 }
 
 void Scene::Release()

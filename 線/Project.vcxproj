@@ -171,7 +171,7 @@
     <ClInclude Include="Src\Application\Scene\RankingScreen.h" />
     <ClInclude Include="Src\Application\Scene\ResultScreen.h" />
     <ClInclude Include="Src\Application\Scene\GameScene.h" />
-    <ClInclude Include="Src\Application\Scene\TutorialScreen.h" />
+    <ClInclude Include="Src\Application\Scene\Title.h" />
     <ClInclude Include="Src\Application\State.h" />
     <ClInclude Include="Src\System\Audio\KdAudio.h" />
     <ClInclude Include="src\System\Direct3D\KdDirect3D.h" />
@@ -207,7 +207,7 @@
     <ClCompile Include="Src\Application\Scene\RankingScreen.cpp" />
     <ClCompile Include="Src\Application\Scene\ResultScreen.cpp" />
     <ClCompile Include="Src\Application\Scene\GameScene.cpp" />
-    <ClCompile Include="Src\Application\Scene\TutorialScreen.cpp" />
+    <ClCompile Include="Src\Application\Scene\Title.cpp" />
     <ClCompile Include="Src\Application\State.cpp" />
     <ClCompile Include="Src\System\Audio\KdAudio.cpp" />
     <ClCompile Include="src\System\Direct3D\KdDirect3D.cpp" />

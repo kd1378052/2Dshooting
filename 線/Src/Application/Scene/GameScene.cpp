@@ -12,6 +12,7 @@
 GameScene::GameScene()
 {
 	backTex.Load("Texture/Game/back.png");
+
 	m_player = new Player();
 	m_player->Init();
 	m_enemy = new Enemy();
@@ -33,12 +34,12 @@ GameScene::GameScene()
 
 	hitscore = 0.0f;
 	bossscore = 0.0f;
-	
 }
 
 GameScene::~GameScene()
 {
 	backTex.Release();
+
 	backX = 0;
 	for (int i = 0; i < explosionNum; i++)
 	{
@@ -57,7 +58,6 @@ void GameScene::Init()
 {
 	hitscore = 0.0f;
 	bossscore = 0.0f;
-	
 
 	m_player->Init();
 	m_enemy->Init();
@@ -75,14 +75,6 @@ void GameScene::Update()
 	
 	//é¿å±
 	if ( GetAsyncKeyState('T') & 0x8000) m_boss->bossHP -= 10;
-	//if (GetAsyncKeyState('E') & 0x8000)
-	//{
-	//	for (int e = 0;e < m_enemy->enemyNum; ++e)
-	//	{
-	//		m_enemy->alive[e] = false;
-	//	}
-	//}
-
 	//îwåiÉXÉNÉçÅ[Éã
 	backX -= 5;
 
@@ -90,10 +82,10 @@ void GameScene::Update()
 	{
 		backX = 0;
 	}
-
 	m_player->Update();
 	m_enemy->Update();
 	m_Denemy->Update();
+
 	if (bossscore >=1000)
 	{
 		for (int e = 0;e < m_enemy->enemyNum; ++e)
@@ -252,6 +244,7 @@ void GameScene::Update()
 					//É{ÉXÇì|Ç∑
 					m_boss->bossFlg = false;
 					//É{ÉXÇÃç¿ïWÇ…îöî≠
+					
 					//í«â¡èàóù
 					for (int i = 0; i < explosionNum; i++)
 					{
@@ -368,8 +361,12 @@ void GameScene::Update()
 		}
 	}
 	
+	//í«â¡èàóù
+	if (GetAsyncKeyState(VK_TAB) & 0x8000)
+	{
 
-	
+	}
+
 
 	//îwåi
 	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
@@ -392,7 +389,6 @@ void GameScene::Draw()
 	SHADER.m_spriteShader.SetMatrix(backMat2);
 	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
 	
-
 	m_player->Draw();
 	m_enemy->Draw();
 	m_Denemy->Draw();
@@ -414,3 +410,4 @@ float GameScene::Rnd()
 {
 	return rand() / (float)RAND_MAX;
 }
+

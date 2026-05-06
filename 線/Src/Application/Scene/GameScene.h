@@ -26,6 +26,7 @@ private:
 	int hitscore;
 	int bossscore;
 
+
 	Player* m_player;
 	Enemy* m_enemy;
 	Score* m_score;
@@ -35,7 +36,7 @@ private:
 	//パーティクル
 	static const int explosionNum = 50;
 	Particle* m_explosion[explosionNum];
-
+	
 	//背景
 	Math::Matrix backMat1;
 	Math::Matrix backMat2;

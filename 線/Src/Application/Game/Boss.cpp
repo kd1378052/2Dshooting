@@ -2,7 +2,7 @@
 
 Boss::Boss()
 {
-	bossTex.Load("Texture/Game/boss.png");
+	bossTex.Load("Texture/Game/boss/boss.png");
 	effectTex.Load("Texture/Game/Effect/effect.png");
 	m_alpha = 1.0f;
 	m_alphaAdd = -0.01f;

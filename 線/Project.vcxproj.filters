@@ -156,7 +156,7 @@
     <ClInclude Include="Src\Application\Scene\GameScene.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Scene\TutorialScreen.h">
+    <ClInclude Include="Src\Application\Scene\Title.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\Game\Player.h">
@@ -254,7 +254,7 @@
     <ClCompile Include="Src\Application\Scene\GameScene.cpp">
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Scene\TutorialScreen.cpp">
+    <ClCompile Include="Src\Application\Scene\Title.cpp">
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\RankingScreen.cpp">
