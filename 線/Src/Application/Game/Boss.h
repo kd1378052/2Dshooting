@@ -1,10 +1,9 @@
 #pragma once
 
-const int B_SCREEN_LEFT = -640;
-const int B_SCREEN_TOP = 360;
-const int B_SCREEN_RIGHT = 640;
-const int B_SCREEN_BOTTOM = -360;
-
+static const int screenLeft   =  -640;//左端
+static const int screenTop	  =  360;//上端
+static const int screenRight  =  640;//右端
+static const int screenBottom =  -360;//下端
 class Boss
 {
 public:
@@ -17,11 +16,14 @@ public:
 
 
 	Math::Vector2 bossPos;
+	Math::Vector2 bossMove;
 	bool bossFlg; //生存フラグ
 	int bossHP;
 
 private:
 	KdTexture bossTex;
 	Math::Matrix bossMat;
+	int bossAppearance;
+
 
 };

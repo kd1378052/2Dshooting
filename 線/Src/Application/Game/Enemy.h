@@ -1,9 +1,9 @@
 #pragma once
 
-const int E_SCREEN_LEFT = -640;
-const int E_SCREEN_TOP = 360;
-const int E_SCREEN_RIGHT = 640;
-const int E_SCREEN_BOTTOM = -360;
+static const int E_SCREEN_LEFT	 = -640;
+static const int E_SCREEN_TOP	 = 360;
+static const int E_SCREEN_RIGHT	 = 640;
+static const int E_SCREEN_BOTTOM = -360;
 
 class Enemy
 {

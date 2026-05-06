@@ -1,9 +1,9 @@
 #pragma once
 
-const int SCREEN_LEFT = -640;
-const int SCREEN_TOP = 360;
-const int SCREEN_RIGHT = 640;
-const int SCREEN_BOTTOM = -360;
+static const int SCREEN_LEFT = -640;
+static const int SCREEN_TOP = 360;
+static const int SCREEN_RIGHT = 640;
+static const int SCREEN_BOTTOM = -360;
 
 class Player
 {

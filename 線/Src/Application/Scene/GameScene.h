@@ -24,6 +24,7 @@ public:
 
 private:
 	int hitscore;
+	int bossscore;
 
 	Player* m_player;
 	Enemy* m_enemy;

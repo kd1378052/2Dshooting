@@ -29,6 +29,7 @@ GameScene::GameScene()
 	}
 
 	hitscore = 0.0f;
+	bossscore = 0.0f;
 
 }
 
@@ -50,6 +51,8 @@ GameScene::~GameScene()
 void GameScene::Init()
 {
 	hitscore = 0.0f;
+	bossscore = 0.0f;
+
 
 	m_player->Init();
 	m_enemy->Init();
@@ -84,15 +87,16 @@ void GameScene::Update()
 	m_player->Update();
 	m_enemy->Update();
 	
-	if (hitscore >=500)
+	if (bossscore >=100)
 	{
-		m_boss->Update();
 		for (int e = 0;e < m_enemy->enemyNum; ++e)
 		{
 			m_enemy->alive[e] = false;
 		}
-		m_boss->bossFlg = true;
 
+		m_boss->Update();
+		m_boss->bossFlg = true;
+		
 	}
 	//’e“–‚½‚è”»’è
 	for (int bu = 0;bu < m_player->bulletNum;bu++)
@@ -124,6 +128,7 @@ void GameScene::Update()
 
 						//ƒXƒRƒA‰ÁZ
 						hitscore += 50;
+						bossscore += 50;
 
 						//”š”­”­¶
 						for (int i = 0; i < explosionNum; i++)
