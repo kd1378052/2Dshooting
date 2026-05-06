@@ -144,9 +144,7 @@ void GameScene::Update()
 					{
 						if (c < 14 + 8)//Õ“Ë‚µ‚Ä‚¢‚½‚ç
 						{
-							//m_enemy->m_alive[e] = false;
-							m_enemy->Split(e);
-
+							m_enemy->m_alive[e] = false;
 
 							m_player->bulletFlg[bu] = false;//’e‚ð–¢”­ŽË‚É‚·‚é
 

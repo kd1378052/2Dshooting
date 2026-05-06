@@ -18,6 +18,7 @@ public:
 
 	Math::Vector2 bossPos;
 	bool bossFlg; //生存フラグ
+	int bossHP;
 
 private:
 	KdTexture bossTex;

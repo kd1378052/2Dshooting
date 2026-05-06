@@ -17,16 +17,14 @@ GameScene::GameScene()
 	m_enemy->Init();
 	m_boss = new Boss();
 	m_boss->Init();
-	m_score = new Score();
 	
+
+	m_score = new Score();
 	
 
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i] = new Particle();
-	}
-	for (int i = 0; i < explosionNum; i++)
-	{
 		m_explosion[i]->Init();
 	}
 
@@ -46,6 +44,7 @@ GameScene::~GameScene()
 	delete m_player;
 	delete m_enemy;
 	delete m_boss;
+	delete m_Xenemy;
 }
 
 void GameScene::Init()
@@ -84,9 +83,18 @@ void GameScene::Update()
 
 	m_player->Update();
 	m_enemy->Update();
-	m_boss->Update();
+	
+	if (hitscore >=500)
+	{
+		m_boss->Update();
+		for (int e = 0;e < m_enemy->enemyNum; ++e)
+		{
+			m_enemy->alive[e] = false;
+		}
+		m_boss->bossFlg = true;
 
-	//当たり判定　ノーマル敵
+	}
+	//弾当たり判定
 	for (int bu = 0;bu < m_player->bulletNum;bu++)
 	{
 		//発射後の処理
@@ -99,7 +107,7 @@ void GameScene::Update()
 			{
 				m_player->bulletFlg[bu] = false;
 			}
-			//弾と敵の当たり判定
+			//弾と敵の当たり判定 ノーマル敵
 			for (int e = 0;e < m_enemy->enemyNum;e++)
 			{
 				if (m_enemy->alive[e])//敵が生きているか
@@ -134,10 +142,37 @@ void GameScene::Update()
 					}
 				}
 			}
+
+			//弾当たり判定　ボス
+			if (m_boss->bossFlg == true) {
+				//距離判定
+				float a = m_boss->bossPos.x - m_player->bulletPos[bu].x;
+				float b = m_boss->bossPos.y - m_player->bulletPos[bu].y;
+				float c = sqrt(a * a + b * b);
+
+				if (c < 8 + 50) {
+
+					m_boss->bossHP -= 5;
+					//弾の座標に爆発
+					//爆発発生
+					for (int i = 0; i < explosionNum; i++)
+					{
+						m_explosion[i]->Emit(
+							{ m_boss->bossPos.x,m_boss->bossPos.y },//座標
+							{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
+							Rnd() * 5 - 1,//サイズ 3 +2→2~5
+							{ 1,1,1.1 },//色
+							1000,//有効期限
+							false);//繰り返しフラグ
+					}
+					//弾を未発射
+					m_player->bulletFlg[bu] = false;
+				}
+			}
 		}
 	}
-
-	//自機と敵の当たり判定
+	
+	//自機とノーマル敵の当たり判定
 	for (int e = 0;e < m_enemy->enemyNum;e++)
 	{
 		if (m_player->playerFlg && m_enemy->alive[e])
@@ -169,6 +204,36 @@ void GameScene::Update()
 			}
 		}
 	}
+	//ボスと時機の当たり判定
+	if (m_player->playerFlg && m_boss->bossFlg)
+	{
+		//自機との当たり判定
+		float a = m_boss->bossPos.x - m_player->playerPos.x;//底辺(X座標の差)
+		float b = m_boss->bossPos.y - m_player->playerPos.y;//高さ(Y座標の差)
+		float c = sqrt(a * a + b * b);//斜辺（距離）
+
+		if (c < 32 + 50)	//突撃していたら　(自機　半径 35 ×敵　半径)
+		{
+			//敵を倒す
+			m_boss->bossFlg = false;
+
+			//自機を倒す処理
+			m_player->playerFlg = false;
+			for (int be = 0;be < m_player->bulletNum;be++) {
+
+				m_player->bulletFlg[be] = false;
+			}
+
+			m_score->SetScore(hitscore);
+			m_score->Save();
+			//リザルト移動
+			SCENEMANAGER.ChangState(new ResultScreen());
+
+			return;
+			//関数を抜ける　（これ以降の処理は行わない）
+		}
+	}
+	
 
 	
 

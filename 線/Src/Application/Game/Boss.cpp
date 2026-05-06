@@ -12,10 +12,11 @@ Boss::~Boss()
 
 void Boss::Init()
 {
-	bossFlg = true;
+	bossFlg = false;
 
-	bossPos.x = 0;
+	bossPos.x = B_SCREEN_RIGHT;
 	bossPos.y = 0;
+	bossHP = 100;
 
 }
 
@@ -26,9 +27,9 @@ void Boss::Update()
 		bossPos.x -= 3;
 
 		//端まで到達したら再出現
-		if (bossPos.x < B_SCREEN_LEFT)
+		if (bossPos.x < B_SCREEN_LEFT -100)
 		{
-			bossPos.x = B_SCREEN_RIGHT;
+			bossPos.x = B_SCREEN_RIGHT+100;
 		}
 		//if (bossPos[e].y < B_SCREEN_BOTTOM - 25)
 		//{

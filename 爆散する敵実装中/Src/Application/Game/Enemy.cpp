@@ -105,6 +105,7 @@ void Enemy::Draw()
 		//	scale);
 
 		SHADER.m_spriteShader.DrawTex(&enemyTex, Math::Rectangle{ 0,0,64,64 }, 1.0f);
+
 	}
 }
 
@@ -131,7 +132,8 @@ void Enemy::Split(int index)
 		m_alive[i] = true;
 		enemySize[i] = ENEMY_SMALL;
 
-		enemyPos[i] = enemyPos[index];
+		//enemyPos[i] = enemyPos[index];
+		//↑追加処理　こいつを消すとバグランなったなぜ？
 
 		enemyVel[i].x = -(rand() % 100) / 50.0f;
 		enemyVel[i].y = (rand() % 200 - 100) / 50.0f;

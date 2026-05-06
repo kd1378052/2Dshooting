@@ -5,8 +5,6 @@ const int E_SCREEN_TOP = 360;
 const int E_SCREEN_RIGHT = 640;
 const int E_SCREEN_BOTTOM = -360;
 
-class Bullet;
-
 class Enemy
 {
 public:

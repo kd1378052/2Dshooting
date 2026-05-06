@@ -177,9 +177,6 @@
     <ClInclude Include="Src\Application\Game\Enemy.h">
       <Filter>Src\Application\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Game\ExplosionEnemy.h">
-      <Filter>Src\Application\Game</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -273,9 +270,6 @@
       <Filter>Src\Application\Game</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Game\Enemy.cpp">
-      <Filter>Src\Application\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Game\ExplosionEnemy.cpp">
       <Filter>Src\Application\Game</Filter>
     </ClCompile>
   </ItemGroup>
