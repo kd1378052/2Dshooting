@@ -41,4 +41,6 @@ private:
 	Math::Matrix backMat2;
 	KdTexture backTex;
 	float backX;
+
+	
 };

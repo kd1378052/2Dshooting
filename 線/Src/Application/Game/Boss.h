@@ -19,11 +19,16 @@ public:
 	Math::Vector2 bossMove;
 	bool bossFlg; //生存フラグ
 	int bossHP;
+	bool effectFlg; //エフェク
+	int bossAppearance;
 
 private:
 	KdTexture bossTex;
 	Math::Matrix bossMat;
-	int bossAppearance;
 
+	Math::Matrix effectMat;
+	KdTexture effectTex;
+	float m_alpha;
+	float m_alphaAdd;
 
 };

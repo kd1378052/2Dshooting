@@ -30,7 +30,7 @@ GameScene::GameScene()
 
 	hitscore = 0.0f;
 	bossscore = 0.0f;
-
+	
 }
 
 GameScene::~GameScene()
@@ -52,7 +52,7 @@ void GameScene::Init()
 {
 	hitscore = 0.0f;
 	bossscore = 0.0f;
-
+	
 
 	m_player->Init();
 	m_enemy->Init();
@@ -66,8 +66,9 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
+	
 	//実験
-	//if ( GetAsyncKeyState('G') & 0x8000) m_boss->bossFlg = false;
+	if ( GetAsyncKeyState('T') & 0x8000) m_boss->bossHP -= 10;
 	//if (GetAsyncKeyState('E') & 0x8000)
 	//{
 	//	for (int e = 0;e < m_enemy->enemyNum; ++e)
@@ -93,11 +94,13 @@ void GameScene::Update()
 		{
 			m_enemy->alive[e] = false;
 		}
-
+		
+		m_boss->effectFlg = true;
 		m_boss->Update();
-		m_boss->bossFlg = true;
 		
 	}
+
+	
 	//弾当たり判定
 	for (int bu = 0;bu < m_player->bulletNum;bu++)
 	{
@@ -173,9 +176,38 @@ void GameScene::Update()
 					//弾を未発射
 					m_player->bulletFlg[bu] = false;
 				}
+
+				if (m_boss->bossHP <= 0) {
+					//ボスを倒す
+					m_boss->bossFlg = false;
+					//ボスの座標に爆発
+					//追加処理
+					for (int i = 0; i < explosionNum; i++)
+					{
+						m_explosion[i]->Emit(
+							{ m_boss->bossPos.x,m_boss->bossPos.y },//座標
+							{ Rnd() * 6 - 3,Rnd() * 6 - 3 },//移動量
+							Rnd() * 5 - 1,//サイズ 3 +2→2~5
+							{ 1,1,1.1 },//色
+							1000,//有効期限
+							false);//繰り返しフラグ
+					}
+					//スコア加算
+					hitscore += 1000;
+					bossscore = 0.0f;
+					m_boss->bossAppearance = 0;
+
+					break;
+				}
 			}
+
 		}
 	}
+	if (bossscore == 0.0f)
+	{
+		m_boss->bossHP = 100;
+	}
+
 	
 	//自機とノーマル敵の当たり判定
 	for (int e = 0;e < m_enemy->enemyNum;e++)
@@ -217,7 +249,7 @@ void GameScene::Update()
 		float b = m_boss->bossPos.y - m_player->playerPos.y;//高さ(Y座標の差)
 		float c = sqrt(a * a + b * b);//斜辺（距離）
 
-		if (c < 32 + 50)	//突撃していたら　(自機　半径 35 ×敵　半径)
+		if (c < 32 + 52)	//突撃していたら　(自機　半径 35 ×敵　半径)
 		{
 			//敵を倒す
 			m_boss->bossFlg = false;
@@ -262,6 +294,7 @@ void GameScene::Draw()
 	//背景（二枚目）
 	SHADER.m_spriteShader.SetMatrix(backMat2);
 	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
+	
 
 	m_player->Draw();
 	m_enemy->Draw();
