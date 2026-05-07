@@ -10,12 +10,16 @@ public:
 
 	void Save();
 	void Load();
+	void NowSave();
+	void NowLoad();
+	void Reset();
 
 	void SetScore(int& hitscore) { score = hitscore; }
 
 	static const int saveNum = 50;//セーブ数
 	int saveScore[saveNum];
-private:
 	int score;
-	
+
+private:
+
 };

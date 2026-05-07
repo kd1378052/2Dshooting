@@ -51,3 +51,33 @@ void Score::Load()
 	}
 
 }
+
+void Score::NowSave()
+{
+	FILE* fp;
+	if (fopen_s(&fp, "Texture/Score/Nowscore.txt", "a") == 0)
+	{
+		fprintf(fp, "%d", score);
+		fclose(fp);
+	}
+}
+
+void Score::NowLoad()
+{
+	FILE* fp;
+	if (fopen_s(&fp, "Texture/Score/Nowscore.txt", "r") == 0)
+	{
+		fscanf_s(fp, "%d", &score);
+		fclose(fp);
+	}
+}
+
+void Score::Reset()
+{
+	FILE* fp;
+	if (fopen_s(&fp, "Texture/Score/Nowscore.txt", "w") == 0)
+	{
+		fprintf(fp, "%d\n", 0);
+		fclose(fp);
+	}
+}

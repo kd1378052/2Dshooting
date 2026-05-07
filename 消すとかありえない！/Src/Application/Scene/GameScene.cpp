@@ -25,7 +25,7 @@ GameScene::GameScene()
 	
 
 	m_score = new Score();
-	
+	m_score->Reset();
 
 	for (int i = 0; i < explosionNum; i++)
 	{
@@ -65,6 +65,9 @@ void GameScene::Init()
 	m_enemy->Init();
 	m_boss->Init();
 	m_Denemy->Init();
+
+	m_score->Reset();
+
 	for (int i = 0; i < explosionNum; i++)
 	{
 		m_explosion[i]->Init();
@@ -297,6 +300,7 @@ void GameScene::Update()
 
 				m_score->SetScore(hitscore);
 				m_score->Save();
+				m_score->NowSave();
 				//ÉäÉUÉãÉgà⁄ìÆ
 				SCENEMANAGER.ChangState(new ResultScreen());
 				
@@ -367,6 +371,7 @@ void GameScene::Update()
 	{
 
 	}
+
 	unsigned long tep = hitscore;
 
 	for (int i = maxDigits - 1; i >= 0; --i)
@@ -407,9 +412,9 @@ void GameScene::Draw()
 
 		SHADER.m_spriteShader.SetMatrix(numbersMat);
 		SHADER.m_spriteShader.DrawTex(&numbersTex,
-			posX + (i * 70)//Çò
+			posX + (i * 30)//Çò
 			, posY + 0,//Çô
-			25, //ïù
+			30, //ïù
 			55,//çÇÇ≥
 			&rc);
 	}

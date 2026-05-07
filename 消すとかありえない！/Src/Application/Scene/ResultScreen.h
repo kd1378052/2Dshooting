@@ -21,4 +21,12 @@ private:
 	//背景
 	Math::Matrix ResultbackMat;
 	KdTexture ResultbackTex;
+	//スコア文字表示
+	Math::Matrix ResultscoreMat;
+	KdTexture ResultscoreTex;
+	//スコア数字表示
+	static const int maxDigits = 5;
+	Math::Matrix scorenumbersMat;
+	KdTexture scorenumbersTex;
+	int m_scorenumbers[maxDigits] = {};//{}初期化
 };
